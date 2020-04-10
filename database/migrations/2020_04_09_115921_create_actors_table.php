@@ -14,8 +14,13 @@ class CreateActorsTable extends Migration
     public function up()
     {
         Schema::create('actors', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
+            $table->string('name');
+            $table->string('profile_image')->nullable()->comment('プロフィール画像');
             $table->timestamps();
+
+            $table->index('id');
+            $table->index('name');
         });
     }
 

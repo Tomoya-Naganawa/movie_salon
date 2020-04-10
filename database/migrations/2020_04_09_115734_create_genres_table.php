@@ -14,8 +14,18 @@ class CreateGenresTable extends Migration
     public function up()
     {
         Schema::create('genres', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->unsignedInteger('movie_id')->comment('映画ID');
+            $table->integer('genre_id')->comment('ジャンルID');
             $table->timestamps();
+
+            $table->index('movie_id');
+            $table->index('genre_id');
+
+            $table->foreign('movie_id')
+                ->references('id')
+                ->on('movies')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

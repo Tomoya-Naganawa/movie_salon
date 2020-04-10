@@ -14,8 +14,17 @@ class CreateCastingsTable extends Migration
     public function up()
     {
         Schema::create('castings', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->unsignedInteger('movie_id')->comment('映画ID');
+            $table->unsignedInteger('actor_id')->comment('俳優ID');
             $table->timestamps();
+
+            $table->index('movie_id');
+            $table->index('actor_id');
+
+            $table->unique([
+                'movie_id',
+                'actor_id'
+            ]);
         });
     }
 
