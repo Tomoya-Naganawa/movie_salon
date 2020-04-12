@@ -19,5 +19,6 @@ Auth::routes();
 
 Route::get('/login/{social}', 'Auth\LoginController@socialLogin')->where('social', 'facebook|google');
 Route::get('/login/{social}/callback', 'Auth\LoginController@handleProviderCallback')->where('social', 'facebook|google');
+Route::get('/search', 'TmdbController@search');
 
 Route::get('/home', 'HomeController@index')->name('home');
