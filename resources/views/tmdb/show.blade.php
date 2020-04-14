@@ -38,7 +38,7 @@
                     <h6 class="text-white-50">あらすじ：</h6>
                     <h6 class="text-white-50 text-monospace"><i>{{ $movie_array['tagline']}}</i></h6>
                     @endif
-                    @if(!empty($movie_array['tagline']))
+                    @if(!empty($movie_array['overview']))
                     <h6 class="text-light">{{ $movie_array['overview']}}</h6>
                     @endif
                 </div>

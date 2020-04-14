@@ -29,7 +29,7 @@
                         <div class="d-flex justify-content-start">
                         @foreach($result['known_for'] as $known_for)
                             @if(isset($known_for['title']))
-                            <a href="{{ url('/movie/'.$known_for['id']) }}" class="text-dark">{{ $known_for['title'] }}　</a>
+                            <a href="{{ url('/search/'.$known_for['id']) }}" class="text-dark">{{ $known_for['title'] }}　</a>
                             @endif
                         @endforeach
                         </div>   
