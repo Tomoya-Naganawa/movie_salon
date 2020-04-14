@@ -29,9 +29,9 @@
                         <div class="d-flex justify-content-start">
                         @foreach($result['known_for'] as $known_for)
                             @if(isset($known_for['title']))
-                            <h6>{{ $known_for['title'] }}　</h6>
+                            <a href="{{ url('/movie/'.$known_for['id']) }}" class="text-dark">{{ $known_for['title'] }}　</a>
                             @endif
-                        @endforeach 
+                        @endforeach
                         </div>   
                     </div>    
                 </div>
@@ -46,19 +46,19 @@
         <div class="card shadow-sm w-100 m-1">
             <div class="card-body d-flex justify-content-start p-0">
                 @if(isset($result['poster_path']))
-                <img class="rounded-left" src="{{'https://image.tmdb.org/t/p/w1280/'.$result['poster_path']}}" height="210" width="140">
+                <img class="rounded-left" src="{{'https://image.tmdb.org/t/p/w1280/'.$result['poster_path']}}" height="180" width="120">
                 @else
                 <p>イメージがありません</p>
                 @endif
                 <div class="p-3">
-                    <h5 class="font-weight-bold">{{ $result['title'] }}<h5>
+                    <a href="{{ url('/search/'.$result['id']) }}" class="text-dark"><h4 class="font-weight-bold">{{ $result['title'] }}</h4></a>
                     @if(isset($result['release_date']))
                         <h6 class="font-weight-light text-muted">{{ $result['release_date'] }}</h6>
                     @else
                         <h6 class="font-weight-light text-muted">公開日情報はありません</h6>
                     @endif
                     @if(isset($result['overview']))
-                        <h6>{{ $result['overview'] }}</h6>
+                        <h6 class="mb-0">{{ str_limit($result['overview'], 250) }}</h6>
                     @else
                         <h6>あらすじはありません</h6>
                     @endif
