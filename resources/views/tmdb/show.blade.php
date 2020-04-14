@@ -45,7 +45,7 @@
             </div>
         </div>
         @if(!empty($credits_array['cast']))
-        <div class="col-md-12 px-2 py-5 text-light">
+        <div class="col-md-12 px-2 py-3 text-light">
             <h5 class="text-white-50">主な出演者</h5>
             <div class="col-md-12 d-flex justfy-content-center">
             @for($i = 0; $i <= 3; $i++)
