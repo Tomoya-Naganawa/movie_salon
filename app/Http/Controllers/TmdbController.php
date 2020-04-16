@@ -44,11 +44,11 @@ class TmdbController extends Controller
             ]);
     }
     
-    public function show($movie_id)
+    public function show($tmdb_movie_id)
     {
         $api_key = "7a093c40ba32d5a12b8109f2984241d3";
 
-        $movie_url = "https://api.themoviedb.org/3/movie/" .$movie_id. "?api_key=" .$api_key. "&language=ja-JA";
+        $movie_url = "https://api.themoviedb.org/3/movie/" .$tmdb_movie_id. "?api_key=" .$api_key. "&language=ja-JA";
         $method = "GET";
 
         $client = new Client();
@@ -56,7 +56,7 @@ class TmdbController extends Controller
         $movie_array = $response->getBody();
         $movie_array = json_decode($movie_array, true);
 
-        $credits_url = "https://api.themoviedb.org/3/movie/" .$movie_id. "/credits?api_key=" .$api_key;
+        $credits_url = "https://api.themoviedb.org/3/movie/" .$tmdb_movie_id. "/credits?api_key=" .$api_key;
         $method = "GET";
 
         $client = new Client();

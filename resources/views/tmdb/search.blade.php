@@ -67,7 +67,7 @@
         </div>
         @endforeach
     @endif
-    @include('components.api_paging')
+    @include('components.tmdb_paging')
     </div>
 </div>
 @endsection

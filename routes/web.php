@@ -20,9 +20,11 @@ Auth::routes();
 Route::get('/login/{social}', 'Auth\LoginController@socialLogin')->where('social', 'facebook|google');
 Route::get('/login/{social}/callback', 'Auth\LoginController@handleProviderCallback')->where('social', 'facebook|google');
 Route::get('/search', 'TmdbController@search');
-Route::get('/search/{movie_id}', 'TmdbController@show');
+Route::get('/search/{tmdb_movie_id}', 'TmdbController@show');
 
-Route::get('/movies/{movie_id}/create', 'MoviesController@create');
-Route::get('/movies/{movie}/show', 'MoviesController@show');
+Route::get('/movies/{tmdb_movie_id}/store', 'MoviesController@store');
+Route::get('/movies/{movie}', 'MoviesController@show');
+
+Route::resource('reviews', 'ReviewsController', ['only' => ['store', 'edit', 'update', 'destroy']]);
 
 Route::get('/home', 'HomeController@index')->name('home');
