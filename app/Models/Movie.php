@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Movie extends Model
 {
     protected $fillable = [
-        'title', 'release_date', 'runtime', 'poster_path', 'rating_avg', 'tagline', 'overview', 'text'
+        'title', 'release_date', 'runtime', 'poster_path', 'rating_avg', 'tagline', 'overview'
     ];
 
     public function genres()

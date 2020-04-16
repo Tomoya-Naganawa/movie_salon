@@ -23,7 +23,6 @@ class CreateMoviesTable extends Migration
             $table->string('director')->nullable()->comment('監督');
             $table->string('tagline')->nullable()->comment('キャッチフレーズ');
             $table->string('overview')->comment('あらすじ');
-            $table->string('text', '1050')->nullable()->comment('評論');
             $table->timestamps();
 
             $table->index('id');
