@@ -16,7 +16,7 @@ class CreateActorsTable extends Migration
         Schema::create('actors', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('profile_image')->nullable()->comment('プロフィール画像');
+            $table->string('profile_path')->nullable()->comment('プロフィール画像');
             $table->timestamps();
 
             $table->index('id');

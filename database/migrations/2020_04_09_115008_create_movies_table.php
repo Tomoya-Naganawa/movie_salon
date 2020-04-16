@@ -18,11 +18,12 @@ class CreateMoviesTable extends Migration
             $table->string('title')->comment('タイトル');
             $table->date('release_date')->nullable()->comment('公開日');
             $table->integer('runtime')->nullable()->comment('上映時間');
-            $table->string('movie_image')->nullable()->comment('イメージ画像');
+            $table->string('poster_path')->nullable()->comment('イメージ画像');
             $table->float('rating_avg', 3, 2)->nullable()->comment('総合評価');
             $table->string('director')->nullable()->comment('監督');
             $table->string('tagline')->nullable()->comment('キャッチフレーズ');
-            $table->string('text', '1050')->nullable()->comment('本文');
+            $table->string('overview')->comment('あらすじ');
+            $table->string('text', '1050')->nullable()->comment('評論');
             $table->timestamps();
 
             $table->index('id');
