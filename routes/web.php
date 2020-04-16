@@ -22,4 +22,6 @@ Route::get('/login/{social}/callback', 'Auth\LoginController@handleProviderCallb
 Route::get('/search', 'TmdbController@search');
 Route::get('/search/{movie_id}', 'TmdbController@show');
 
+Route::get('/movies/{movie_id}/create', 'MoviesController@create');
+
 Route::get('/home', 'HomeController@index')->name('home');
