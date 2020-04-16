@@ -33,4 +33,9 @@ class Movie extends Model
 
         return;
     }
+
+    public function getMovie(Int $movie_id)
+    {
+        return $this->with(['actors','genres'])->where('id', $movie_id)->first();
+    }
 }

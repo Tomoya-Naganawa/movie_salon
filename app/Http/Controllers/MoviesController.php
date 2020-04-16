@@ -34,13 +34,13 @@ class MoviesController extends Controller
 
         foreach($movie_array['genres'] as $movie_genre){
             $movie->genres()->create([
-            'movie_id' => $movie->id,    
+            'movie_id' => $movie->id,
             'genre_id' => $movie_genre['id']
             ]);
         }
 
         $actors = [];
-        for($i = 0; $i <= 2; $i++){
+        for($i = 0; $i <= 3; $i++){
             if(empty($credits_array['cast'][$i])){
             break;
             }
@@ -58,5 +58,14 @@ class MoviesController extends Controller
         $movie->actors()->attach($actors_id);
         
         return redirect('home');
+    }
+
+    public function show(Movie $movie)
+    {
+        $movie->getMovie($movie->id);
+
+        return view('movie.show', [
+            'movie' => $movie
+        ]);
     }
 }
