@@ -11,15 +11,4 @@ class Genre extends Model
         'genre_id'
     ];
 
-    public function storeGenre(Array $genres)
-    {
-        foreach($genres as $genre){
-            $this->movie_id = $movie_array['id'];
-            $this->genre_id = $genre;
-
-            $this->save();
-        }
-        
-        return ;
-    }
 }

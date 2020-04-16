@@ -23,7 +23,7 @@
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 
     <style>
-        body {
+        .movie_main {
             background: radial-gradient(#777777	, #333333);
         }    
     </style>
@@ -60,8 +60,11 @@
         </div>
     </div>
     </nav>
-    <main class="pt-4">
+    <main class="movie_main pt-4">
         @yield('movie')
+    </main>
+    <main class="review_main pt-4">
+        @yield('review')
     </main>
     </div>
 </body>

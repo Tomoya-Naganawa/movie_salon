@@ -1,4 +1,4 @@
-@extends('layouts.api_movie_show')
+@extends('layouts.show')
 
 @section('movie')
 <div class="container"> 
