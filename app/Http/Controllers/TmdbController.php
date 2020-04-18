@@ -36,7 +36,7 @@ class TmdbController extends Controller
         $search_array = $response->getBody();
         $search_array = json_decode($search_array, true);
 
-        return view('tmdb.search', [
+        return view('tmdbs.search', [
             'search_array' => $search_array,
             'query' => $query,
             'category' => $category,
@@ -64,7 +64,7 @@ class TmdbController extends Controller
         $credits_array = $response->getBody();
         $credits_array = json_decode($credits_array, true);
 
-        return view('tmdb.show', [
+        return view('tmdbs.show', [
             'movie_array' => $movie_array,
             'credits_array' => $credits_array
         ]);

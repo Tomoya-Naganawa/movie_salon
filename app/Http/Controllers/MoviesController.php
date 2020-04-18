@@ -64,7 +64,7 @@ class MoviesController extends Controller
     {
         $movie->getMovie($movie->id);
 
-        return view('movie.show', [
+        return view('movies.show', [
             'movie' => $movie
         ]);
     }
