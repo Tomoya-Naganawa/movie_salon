@@ -7,28 +7,14 @@ use GuzzleHttp\Client;
 use App\Models\Movie;
 use App\Models\Genre;
 use App\Models\Actor;
+use App\Libraries\Tmdb;
 
 class MoviesController extends Controller
 {
     public function store(Request $request, Movie $movie, Genre $genre, Actor $actor, $tmdb_movie_id)
     {
-        $api_key = "7a093c40ba32d5a12b8109f2984241d3";
-
-        $movie_url = "https://api.themoviedb.org/3/movie/" .$tmdb_movie_id. "?api_key=" .$api_key. "&language=ja-JA";
-        $method = "GET";
-
-        $client = new Client();
-        $response = $client->request($method, $movie_url);
-        $movie_array = $response->getBody();
-        $movie_array = json_decode($movie_array, true);
-
-        $credits_url = "https://api.themoviedb.org/3/movie/" .$tmdb_movie_id. "/credits?api_key=" .$api_key;
-        $method = "GET";
-
-        $client = new Client();
-        $response = $client->request($method, $credits_url);
-        $credits_array = $response->getBody();
-        $credits_array = json_decode($credits_array, true);
+        $movie_array = Tmdb::getMovieArray($tmdb_movie_id);
+        $credits_array = Tmdb::getCreditArray($tmdb_movie_id);
 
         $movie->storeMovie($movie_array);
 
