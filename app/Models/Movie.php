@@ -38,4 +38,9 @@ class Movie extends Model
     {
         return $this->with(['actors','genres'])->where('id', $movie_id)->first();
     }
+
+    public function getMovieTitle(Int $movie_id)
+    {
+        return $this->where('id', $movie_id)->value('title');
+    }
 }

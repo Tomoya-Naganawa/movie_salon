@@ -50,7 +50,7 @@
             </div>
         </div>
         <div class="col-md-12 d-flex justfy-content-end text-light">
-            <a class="btn btn-primary" href="#">コメントする（仮）</a>
+            <a class="btn btn-primary" href="{{ url('/reviews/'.$movie->id) }}">コメントする（仮）</a>
         </div>   
     </div>
 </div>
