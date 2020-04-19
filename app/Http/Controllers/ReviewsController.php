@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Review;
 use App\Models\Movie;
 
@@ -24,9 +25,24 @@ class ReviewsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Movie $movie, Review $review)
     {
-        //
+        $user = auth()->user();
+        $data = $request->all();
+
+        $validator = Validator::make($data, [
+            'movie_id' => ['required', 'integer'],
+            'rating'   => ['required', 'integer', 'in:1,2,3,4,5'],
+            'heading'  => ['required', 'string', 'max:100'],
+            'text'     => ['required', 'string', 'max:2500']
+        ]);
+
+        $validator->validate();
+        $review->reviewStore($user->id, $data);
+
+        $movie->ratingAvgUpdate($data['movie_id']);
+
+        return redirect( url('/movies/'.$data['movie_id']) );
     }
 
     /**

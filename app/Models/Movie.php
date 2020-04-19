@@ -10,6 +10,11 @@ class Movie extends Model
         'title', 'release_date', 'runtime', 'poster_path', 'rating_avg', 'tagline', 'overview'
     ];
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
     public function genres()
     {
         return $this->hasmany(Genre::class);
@@ -42,5 +47,14 @@ class Movie extends Model
     public function getMovieTitle(Int $movie_id)
     {
         return $this->where('id', $movie_id)->value('title');
+    }
+
+    public function ratingAvgUpdate(Int $movie_id)
+    {
+        $rating_avg = $this->with('reviews')->where('id', $movie_id)->first()->reviews->avg('rating');
+
+        $this::where('id', $movie_id)
+             ->update(['rating_avg' => $rating_avg]);
+             return ;
     }
 }

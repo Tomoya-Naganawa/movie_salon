@@ -2,7 +2,7 @@
 
 @section('movie')
 <div class="container"> 
-    <div class="row mx-0 px-0">
+    <div class="row mx-0 px-0 py-4">
         <div class="col-md-12 mx-0 px-0 d-flex justify-content-center text-white">
             <div class="col-md-4">
                 <img class="rounded img-fluid shadow" src="{{'https://image.tmdb.org/t/p/w1280/'.$movie->poster_path}}" height="420" width="280">  

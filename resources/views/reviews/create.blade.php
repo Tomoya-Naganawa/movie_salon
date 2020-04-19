@@ -9,6 +9,7 @@
 
             <div class="form-group border-bottom">
                 <h4 class="font-weight-bold">作品名：{{ $movie_title }}</h4>
+                <input type="hidden" name="movie_id" value="{{ $movie_id }}">
             </div>
             <div class="form-group pb-2 border-bottom">
                 <h5 class="font-weight-bold">総合評価</h5>
@@ -38,8 +39,8 @@
             </div>
             <div class="form-group">
                 <h5 class="font-weight-bold">レビュータイトル</h5>
-                <input class="form-control @invalid('headline')" name="headline" autocomplete="headline" placeholder="あなたがこの映画で最も伝えたいポイントは？">
-                @component('components.invalid_feedback', ['name' => 'text'])
+                <input class="form-control @invalid('heading')" name="heading" autocomplete="headline" placeholder="あなたがこの映画で最も伝えたいポイントは？">
+                @component('components.invalid_feedback', ['name' => 'heading'])
                 @endcomponent       
             </div>
             <div class="form-group">

@@ -60,10 +60,10 @@
         </div>
     </div>
     </nav>
-    <main class="movie_main pt-4">
+    <main class="movie_main">
         @yield('movie')
     </main>
-    <main class="review_main pt-4">
+    <main class="review_main">
         @yield('review')
     </main>
     </div>

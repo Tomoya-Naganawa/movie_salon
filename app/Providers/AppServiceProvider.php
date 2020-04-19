@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Routing\UrlGenerator;
+use Blade;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,5 +26,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot(UrlGenerator $url)
     {
         $url->forceScheme('https');
+
+        Blade::directive('invalid', function ($name) {
+            return '<?php
+              if ($errors->has('.$name.')) {
+                echo "is-invalid";
+              } else {
+                echo "";
+              }
+            ?>';
+          });
     }
 }
