@@ -41,6 +41,7 @@ class MoviesController extends Controller
         foreach($actors as $actor){
             array_push($actors_id, $actor['id']);
         }
+        
         $movie->actors()->attach($actors_id);
         
         return redirect('home');

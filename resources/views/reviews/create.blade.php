@@ -39,7 +39,7 @@
             </div>
             <div class="form-group">
                 <h5 class="font-weight-bold">レビュータイトル</h5>
-                <input class="form-control @invalid('heading')" name="heading" autocomplete="headline" placeholder="あなたがこの映画で最も伝えたいポイントは？">
+                <input class="form-control @invalid('heading')" name="heading" autocomplete="heading" placeholder="あなたがこの映画で最も伝えたいポイントは？">
                 @component('components.invalid_feedback', ['name' => 'heading'])
                 @endcomponent       
             </div>

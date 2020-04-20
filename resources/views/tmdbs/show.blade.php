@@ -2,8 +2,8 @@
 
 @section('movie')
 <div class="container"> 
-    <div class="row mx-0 px-0">
-        <div class="col-md-12 mx-0 px-0 d-flex justify-content-center text-white">
+    <div class="row">
+        <div class="col-md-12 px-0 py-3 d-flex justify-content-center text-white">
             <div class="col-md-4">
                 @if(!empty($movie_array['poster_path']))
                 <img class="rounded img-fluid shadow" src="{{'https://image.tmdb.org/t/p/w1280/'.$movie_array['poster_path']}}" height="420" width="280">  
@@ -45,11 +45,11 @@
             </div>
         </div>
         @if(!empty($credits_array['cast']))
-        <div class="col-md-12 px-2 py-4 text-light">
-            <h5 class="text-white-50">主な出演者</h5>
+        <div class="col-md-12 px-0 py-3 text-light">
+            <h5 class="text-white-50 pl-3">主な出演者</h5>
             <div class="col-md-12 d-flex justfy-content-center">
             @for($i = 0; $i <= 3; $i++)
-                @if(empty($credits_array['cast'][$i]))    
+                @if(empty($credits_array['cast'][$i]))
                 @break
                 @endif
                 <div class="card w-25 mx-1" style="background-color:#333333;">
@@ -57,9 +57,9 @@
                         @if(!empty($credits_array['cast'][$i]['profile_path']))
                         <img class="rounded-left img-fluid" src="{{'https://image.tmdb.org/t/p/w1280/'.$credits_array['cast'][$i]['profile_path']}}" height="90" width="60">
                         @endif
-                        <div class="align-self-center mx-2">
-                            <a href="{{ url('search?query='.$credits_array['cast'][$i]['name'].'&category=person') }}" class="text-light font-weight-bold mb-0">{{ $credits_array['cast'][$i]['name'] }}</a>
-                            <p>{{ $credits_array['cast'][$i]['character'] }}</p>
+                        <div class="align-self-center mx-1">
+                            <h6><a href="{{ url('search?query='.$credits_array['cast'][$i]['name'].'&category=person') }}" class="text-light font-weight-bold mb-0">{{ $credits_array['cast'][$i]['name'] }}</a></h6>
+                            <h6 class="mb-0">{{ $credits_array['cast'][$i]['character'] }}</h6>
                         </div>
                     </div>
                 </div>    
@@ -67,7 +67,7 @@
             </div>
         </div>
         @endif
-        <div class="col-md-12 d-flex justfy-content-end text-light">
+        <div class="col-md-12 pb-4 d-flex justfy-content-end text-light">
             <a class="btn btn-primary" href="{{ url('/movies/'.$movie_array['id']).'/store' }}">コメントする（仮）</a>
         </div>   
     </div>
