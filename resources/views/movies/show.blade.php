@@ -26,7 +26,20 @@
                 <div class="d-flex">
                     <h6 class="text-white-50">上映時間：</h6>
                     <h6 class="text-light">{{ $movie->runtime }}分</h6>
-                </div>   
+                </div>
+                <div class="d-flex align-items-end mt-2 mb-4">                           
+                    @if(isset($movie->rating_avg))
+                        @php
+                        $stars = $movie->rating_avg;
+                        for($i = 1; $i <= $stars; $i++){ 
+                            echo '<i class="fas fa-star fa-2x" style="color:#ffcc00;"></i>' ; 
+                            } 
+                        @endphp
+                        <h5 class="mb-0 ml-3">{{ $movie->rating_avg }}<small class="text-white-50"> ユーザーレビュー({{ count($movie->reviews) }})</small></h5>
+                    @else
+                        <h6 class="mb-0 ml-3">まだレビューはありません</h6>
+                    @endif             
+                </div>
                 <div class="mt-3">
                     <h6 class="text-white-50">あらすじ：</h6>
                     <h6 class="text-white-50 text-monospace"><i>{{ $movie->tagline }}</i></h6>
@@ -42,7 +55,7 @@
                     <div class="card-body p-0 d-flex">
                         <img class="rounded-left img-fluid" src="{{'https://image.tmdb.org/t/p/w1280/'.$actor->profile_path }}" height="90" width="60">
                         <div class="align-self-center mx-2">
-                            <p>{{ $actor->name }}</p>
+                            <p class="mb-0">{{ $actor->name }}</p>
                         </div>
                     </div>
                 </div>    
@@ -54,4 +67,44 @@
         </div>   
     </div>
 </div>
+@stop
+@section('review')
+<div class="container">
+    <div class="row justify-content-center py-4">
+        <div class="col-md-11">
+            <h4 class="border-bottom mb-3">ユーザーレビュー({{ count($movie->reviews) }})</h4>
+            @foreach($movie->reviews as $review)
+            <div class="card mb-2 shadow">
+                <div class="card-header bg-white d-flex p-2">
+                    <img src="{{ $review->user->profile_image }}" class="rounded-circle" width="30" height="30">
+                    <div class="ml-2 d-flex flex-column">
+                        <a href="#" class="text-secondary">{{ $review->user->name }}</a>
+                    </div>
+                    <div class="d-flex justify-content-end flex-grow-1">
+                        <p class="mb-0 text-secondary">{{ $review->user->created_at->format('Y-m-d H:i') }}に投稿</p>
+                    </div>
+                </div>    
+                <div class="card-body bg-white p-2">
+                    <div class="d-flex align-items-center mb-2">
+                        @php
+                        $stars = $review->rating;
+                        for($i = 1; $i <= $stars; $i++){ 
+                            echo '<i class="fas fa-star fa" style="color:#ffcc00;"></i>' ; 
+                            } 
+                        @endphp
+                        <strong class="ml-2">{{ $review->heading }}</strong>
+                    </div>
+                    <p class="mb-0">{{ str_limit($review->text, 250) }}</p>
+                    <form method="POST" action="{{ url('/reviews/'.$review->id) }}">
+                        @csrf
+                        @method('DELETE')
+
+                        <button type="submit" class="btn btn-sm btn-link text-danger" data-toggle="modal"><i class="fas fa-trash-alt"></i> 削除</button>
+                    </form>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</div>    
 @endsection

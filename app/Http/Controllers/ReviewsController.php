@@ -38,7 +38,6 @@ class ReviewsController extends Controller
         ]);
         $validator->validate();
         $review->reviewStore($user->id, $data);
-
         $movie->ratingAvgUpdate($data['movie_id']);
 
         return redirect( url('/movies/'.$data['movie_id']) );
@@ -77,7 +76,6 @@ class ReviewsController extends Controller
         ]);
         $validator->validate();
         $review->updateReview($data);
-
         $movie->ratingAvgUpdate($review->movie_id);
 
         return redirect( url('/movies/'.$review->movie_id) );
@@ -89,8 +87,11 @@ class ReviewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Review $review, Movie $movie)
     {
-        //
+        $review->destroyReview($review->id);
+        $movie->ratingAvgUpdate($review->movie_id);
+
+        return back();
     }
 }

@@ -47,4 +47,9 @@ class Review extends Model
                  ]);
         return ;         
     }
+
+    public function destroyReview(Int $review_id)
+    {
+        return $this->where('id', $review_id)->delete();
+    }
 }
