@@ -95,12 +95,20 @@
                         <strong class="ml-2">{{ $review->heading }}</strong>
                     </div>
                     <p class="mb-0">{{ str_limit($review->text, 250) }}</p>
-                    <form method="POST" action="{{ url('/reviews/'.$review->id) }}">
-                        @csrf
-                        @method('DELETE')
+                    <div class="col-md-12 d-flex justify-content-end">
+                        <form method="POST" action="{{ url('/reviews/'.$review->id) }}">
+                            @csrf
+                            @method('DELETE')
 
-                        <button type="submit" class="btn btn-sm btn-link text-danger" data-toggle="modal"><i class="fas fa-trash-alt"></i> 削除</button>
-                    </form>
+                            <a href="{{ url('/reviews/'.$review->id.'/edit') }}" class="btn btn-sm text-primary p-0"><i class="fas fa-edit"></i> 編集</a>
+                            <button type="button" class="btn btn-sm btn-link text-danger p-0 ml-2" data-toggle="modal" data-target="#reviewDelModal"><i class="fas fa-trash-alt"></i> 削除</button>
+                            <div class="modal fade" id="reviewDelModal" tabindex="-1" role="dialog" aria-labelledby="reviewDelModalLabel" aria-hidden="true">
+                            @component('components.del_modal')
+                                このレビューを削除しますか
+                            @endcomponent
+                            </div>     
+                        </form>
+                    </div>
                 </div>
             </div>
             @endforeach
