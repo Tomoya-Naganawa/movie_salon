@@ -32,5 +32,19 @@ class Review extends Model
         return;
     }
 
+    public function getEditReview(Int $review_id)
+    {
+        return $this->with('movie')->where('id', $review_id)->first();
+    }
     
+    public function updateReview(Array $data)
+    {
+        $this::where('id', $this->id)
+                 ->update([
+                     'rating' => $data['rating'],
+                     'heading' => $data['heading'],
+                     'text' => $data['text'],
+                 ]);
+        return ;         
+    }
 }

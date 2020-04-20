@@ -28,15 +28,14 @@ class ReviewsController extends Controller
     public function store(Request $request, Movie $movie, Review $review)
     {
         $user = auth()->user();
-        $data = $request->all();
 
+        $data = $request->all();
         $validator = Validator::make($data, [
             'movie_id' => ['required', 'integer'],
             'rating'   => ['required', 'integer', 'in:1,2,3,4,5'],
             'heading'  => ['required', 'string', 'max:100'],
             'text'     => ['required', 'string', 'max:2500']
         ]);
-
         $validator->validate();
         $review->reviewStore($user->id, $data);
 
@@ -51,9 +50,14 @@ class ReviewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Review $review)
     {
-        //
+        $user = auth()->user();
+        $review = $review->getEditReview($review->id);
+
+        return view('reviews.edit', [
+            'review' => $review
+        ]);
     }
 
     /**
@@ -63,9 +67,20 @@ class ReviewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Review $review, Movie $movie)
     {
-        //
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'rating'   => ['required', 'integer', 'in:1,2,3,4,5'],
+            'heading'  => ['required', 'string', 'max:100'],
+            'text'     => ['required', 'string', 'max:2500']
+        ]);
+        $validator->validate();
+        $review->updateReview($data);
+
+        $movie->ratingAvgUpdate($review->movie_id);
+
+        return redirect( url('/movies/'.$review->movie_id) );
     }
 
     /**
