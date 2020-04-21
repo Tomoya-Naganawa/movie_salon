@@ -25,7 +25,7 @@ Route::get('/search/{tmdb_movie_id}', 'TmdbController@show');
 Route::get('/movies/{tmdb_movie_id}/store', 'MoviesController@store');
 Route::get('/movies/{movie}', 'MoviesController@show');
 
-Route::get('/reviews/{movie_id}', 'ReviewsController@create');
-Route::resource('reviews', 'ReviewsController', ['only' => ['store', 'edit', 'update', 'destroy']]);
+Route::get('/reviews/{movie_id}/create', 'ReviewsController@create');
+Route::resource('reviews', 'ReviewsController', ['only' => ['show', 'store', 'edit', 'update', 'destroy']]);
 
 Route::get('/home', 'HomeController@index')->name('home');

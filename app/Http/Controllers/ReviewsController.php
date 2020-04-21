@@ -9,6 +9,15 @@ use App\Models\Movie;
 
 class ReviewsController extends Controller
 {
+    public function show(Review $review)
+    {
+        $review = $review->getReview($review->id);
+
+        return view('reviews.show', [
+            'review' => $review
+        ]);
+    }
+
     public function create($movie_id, Movie $movie)
     {
         $movie_title = $movie->getMovieTitle($movie_id);

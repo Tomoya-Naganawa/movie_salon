@@ -63,7 +63,7 @@
             </div>
         </div>
         <div class="col-md-12 d-flex justfy-content-end text-light">
-            <a class="btn btn-primary" href="{{ url('/reviews/'.$movie->id) }}">コメントする（仮）</a>
+            <a class="btn btn-primary" href="{{ url('/reviews/'.$movie->id.'/create') }}">コメントする（仮）</a>
         </div>   
     </div>
 </div>
@@ -92,7 +92,7 @@
                             echo '<i class="fas fa-star fa" style="color:#ffcc00;"></i>' ; 
                             } 
                         @endphp
-                        <strong class="ml-2">{{ $review->heading }}</strong>
+                        <a href="{{ url('/reviews/'.$review->id) }}" class="text-dark"><strong class="ml-2">{{ $review->heading }}</strong></a>
                     </div>
                     <p class="mb-0">{{ str_limit($review->text, 250) }}</p>
                     <div class="col-md-12 d-flex justify-content-end">
