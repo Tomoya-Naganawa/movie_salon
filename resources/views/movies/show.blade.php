@@ -81,7 +81,7 @@
                         <a href="#" class="text-secondary">{{ $review->user->name }}</a>
                     </div>
                     <div class="d-flex justify-content-end flex-grow-1">
-                        <p class="mb-0 text-secondary">{{ $review->user->created_at->format('Y-m-d H:i') }}に投稿</p>
+                        <p class="mb-0 text-secondary">{{ $review->created_at->format('Y-m-d H:i') }}に投稿</p>
                     </div>
                 </div>    
                 <div class="card-body bg-white p-2">

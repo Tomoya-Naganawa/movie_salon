@@ -28,4 +28,6 @@ Route::get('/movies/{movie}', 'MoviesController@show');
 Route::get('/reviews/{movie_id}/create', 'ReviewsController@create');
 Route::resource('reviews', 'ReviewsController', ['only' => ['show', 'store', 'edit', 'update', 'destroy']]);
 
+Route::resource('comments', 'CommentsController', ['only' => ['store', 'destroy']]);
+
 Route::get('/home', 'HomeController@index')->name('home');

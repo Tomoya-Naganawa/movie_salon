@@ -3,8 +3,8 @@
 @section('content')
 <div class="container px-0">
     <div class="row py-4">
-        <div class="col-md-12 d-flex">
-            <div class="col-md-3 mb-4">
+        <div class="col-md-12 d-flex px-0">
+            <div class="col-md-3 px-2">
                 <div class="card d-flex w-100">
                     <div class="d-flex">
                         <div class="col-md-4 p-0">
@@ -20,13 +20,13 @@
                                     echo '<i class="fas fa-star fa" style="color:#ffcc00;"></i>' ; 
                                     } 
                                 @endphp
-                                <h6 class="mb-0 ml-2">{{ $review->movie->rating_avg }}<small class="text-dark">({{ count($review->movie->reviews) }})</small></h6>             
+                                <h6 class="mb-0 ml-2">{{ $review->movie->rating_avg }}</h6>             
                             </div>
                         </div>
                     </div> 
                 </div>
             </div>    
-            <div class="col-md-9">
+            <div class="col-md-9 px-2">
                 <div class="card w-100">
                     <div class="card-header bg-white d-flex p-2">
                         <img src="{{ $review->user->profile_image }}" class="rounded-circle" width="30" height="30">
@@ -64,20 +64,51 @@
                         </div>
                     </div>
                 </div>
-                <h4 class="pt-4 border-bottom">コメント</h4>
-                <div class="card w-100">
+                <h4 class="border-bottom mt-4">コメント</h4>
+                @foreach($review->comments as $comment)
+                <div class="card w-100 my-3">
                     <div class="card-header bg-white d-flex p-2">
-                        <img src="{{ $review->user->profile_image }}" class="rounded-circle" width="30" height="30">
+                        <img src="{{ $comment->user->profile_image }}" class="rounded-circle" width="30" height="30">
                         <div class="ml-2 d-flex flex-column">
-                            <a href="#" class="text-secondary">{{ $review->user->name }}</a>
+                            <a href="#" class="text-secondary">{{ $comment->user->name }}</a>
                         </div>
                         <div class="d-flex justify-content-end flex-grow-1">
-                            <p class="mb-0 text-secondary">{{ $review->user->created_at->format('Y-m-d H:i') }}に投稿</p>
+                            <p class="mb-0 text-secondary">{{ $comment->created_at->format('Y-m-d H:i') }}に投稿</p>
                         </div>
                     </div>
                     <div class="card-body bg-white p-2">
-                        <p class="m-0">あああああああああああああああああああああああああああああああああああああああああああああああ</p> 
+                        <p class="m-0">{{ $comment->text }}</p>
+                        <div class="col-md-12 d-flex justify-content-end">
+                            <form method="POST" action="{{ url('/comments/'.$comment->id) }}">
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="button" class="btn btn-sm btn-link text-danger p-0 ml-2" data-toggle="modal" data-target="#commentDelModal"><i class="fas fa-trash-alt"></i> 削除</button>
+                                <div class="modal fade" id="commentDelModal" tabindex="-1" role="dialog" aria-labelledby="commentDelModalLabel" aria-hidden="true">
+                                @component('components.del_modal')
+                                    このレビューを削除しますか
+                                @endcomponent
+                                </div>     
+                            </form>
+                        </div>
                     </div>              
+                </div>
+                @endforeach
+                <div class="col-md-12 mt-3 px-0">
+                    <h4 class="border-bottom mt-2"></h4>
+                    <div class="form-group m-0">
+                        <form method="POST" action="{{ url('/comments') }}" class="mt-3">
+                            @csrf
+
+                            <textarea class="form-control @invalid('text')" name="text" autocomplete="text" rows="5" placeholder="このレビューにコメントします"></textarea>
+                            @component('components.invalid_feedback', ['name' => 'text'])
+                            @endcomponent
+                            <div class="d-flex justify-content-end mt-1">
+                                <input type="hidden" name="review_id" value="{{ $review->id }}">
+                                <button type="submit" class="btn btn-primary">投稿</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

@@ -20,9 +20,14 @@ class Review extends Model
         return $this->belongsTo(Movie::class);
     }
 
+    public function comments()
+    {
+        return $this->hasmany(Comment::class);
+    }
+
     public function getReview(Int $review_id)
     {
-        return $this->with(['movie', 'user'])->where('id', $review_id)->first();
+        return $this->with(['movie', 'user', 'comments.user'])->where('id', $review_id)->first();
     }
 
     public function reviewStore(Int $user_id, Array $data)
