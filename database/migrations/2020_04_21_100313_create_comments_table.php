@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReviewsTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,16 @@ class CreateReviewsTable extends Migration
      */
     public function up()
     {
-        Schema::create('reviews', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id')->comment('ユーザID');
-            $table->unsignedInteger('movie_id')->comment('映画ID');
-            $table->tinyInteger('rating')->comment('評価');
-            $table->string('heading')->comment('見出し');
-            $table->string('text', '2600')->comment('本文');
+            $table->unsignedInteger('review_id')->comment('レビューID');
+            $table->string('text')->comment('本文');
             $table->timestamps();
 
             $table->index('id');
             $table->index('user_id');
-            $table->index('movie_id');
+            $table->index('review_id');
 
             $table->foreign('user_id')
                 ->references('id')
@@ -32,9 +30,9 @@ class CreateReviewsTable extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             
-            $table->foreign('movie_id')
+            $table->foreign('review_id')
                 ->references('id')
-                ->on('movies')
+                ->on('reviews')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
@@ -47,6 +45,6 @@ class CreateReviewsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reviews');
+        Schema::dropIfExists('comments');
     }
 }
