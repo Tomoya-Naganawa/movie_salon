@@ -30,4 +30,6 @@ Route::resource('reviews', 'ReviewsController', ['only' => ['show', 'store', 'ed
 
 Route::resource('comments', 'CommentsController', ['only' => ['store', 'destroy']]);
 
+Route::resource('favorites', 'FavoritesController', ['only' => ['store', 'destroy']]);
+
 Route::get('/home', 'HomeController@index')->name('home');

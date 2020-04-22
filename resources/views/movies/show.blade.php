@@ -62,9 +62,7 @@
             @endforeach
             </div>
         </div>
-        <div class="col-md-12 d-flex justfy-content-end text-light">
-            <a class="btn btn-primary" href="{{ url('/reviews/'.$movie->id.'/create') }}">コメントする（仮）</a>
-        </div>   
+         
     </div>
 </div>
 @stop
@@ -72,7 +70,8 @@
 <div class="container">
     <div class="row justify-content-center py-4">
         <div class="col-md-11">
-            <h4 class="border-bottom mb-3">ユーザーレビュー({{ count($movie->reviews) }})</h4>
+            <a class="btn btn-primary mb-4" href="{{ url('/reviews/'.$movie->id.'/create') }}">この映画のレビューを書く</a>
+            <h4 class="border-bottom mb-2">ユーザーレビュー({{ count($movie->reviews) }})</h4>
             @foreach($movie->reviews as $review)
             <div class="card mb-2 shadow">
                 <div class="card-header bg-white d-flex p-2">
@@ -90,25 +89,54 @@
                         $stars = $review->rating;
                         for($i = 1; $i <= $stars; $i++){ 
                             echo '<i class="fas fa-star fa" style="color:#ffcc00;"></i>' ; 
-                            } 
+                            }
                         @endphp
                         <a href="{{ url('/reviews/'.$review->id) }}" class="text-dark"><strong class="ml-2">{{ $review->heading }}</strong></a>
                     </div>
                     <p class="mb-0">{{ str_limit($review->text, 250) }}</p>
-                    <div class="col-md-12 d-flex justify-content-end">
-                        <form method="POST" action="{{ url('/reviews/'.$review->id) }}">
-                            @csrf
-                            @method('DELETE')
+                    @if ($review->user_id === Auth::user()->id) 
+                    <div class="col-md-12 d-flex px-1">
+                        @if (!in_array(Auth::user()->id, array_column($review->favorites->toArray(), 'user_id'), TRUE))
+                            <form method="POST" action="{{ url('favorites/') }}" class="mb-0">
+                                @csrf
 
-                            <a href="{{ url('/reviews/'.$review->id.'/edit') }}" class="btn btn-sm text-primary p-0"><i class="fas fa-edit"></i> 編集</a>
-                            <button type="button" class="btn btn-sm btn-link text-danger p-0 ml-2" data-toggle="modal" data-target="#reviewDelModal"><i class="fas fa-trash-alt"></i> 削除</button>
-                            <div class="modal fade" id="reviewDelModal" tabindex="-1" role="dialog" aria-labelledby="reviewDelModalLabel" aria-hidden="true">
-                            @component('components.del_modal')
-                                このレビューを削除しますか
-                            @endcomponent
-                            </div>     
-                        </form>
+                                <input type="hidden" name="review_id" value="{{ $review->id }}">
+                                <button type="submit" class="btn btn-link p-0 border-0 text-primary"><i class="far fa-heart fa-fw"></i></button>
+                            </form>
+                        @else
+                            <form method="POST" action="{{ url('favorites/' .array_column($review->favorites->toArray(), 'id', 'user_id')[Auth::user()->id]) }}" class="mb-0">
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit" class="btn btn-link p-0 border-0 text-danger"><i class="fas fa-heart fa-fw"></i></button>
+                            </form>
+                        @endif
+                        <p class="mb-0 ml-1 text-secondary">{{ count($review->favorites) }}</p>
+                        <a href="{{ url('/reviews/'.$review->id) }}" class="btn text-primary p-0 ml-3"><i class="far fa-comment"></i></a>
+                        <p class="mb-0 ml-1 text-secondary">{{ count($review->comments) }}</p>
+                        <div class="d-flex justify-content-end flex-grow-1">
+                            <div class="dropdown d-flex align-items-center">
+                                <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v fa-fw"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                    <form method="POST" action="{{ url('/reviews/'.$review->id) }}">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <a href="{{ url('/reviews/'.$review->id.'/edit') }}" class="btn btn-sm text-primary p-0 ml-2"><i class="fas fa-edit"></i> 編集</a>
+                                        <button type="button" class="btn btn-sm btn-link text-danger p-0 ml-2" data-toggle="modal" data-target="#reviewDelModal"><i class="fas fa-trash-alt"></i> 削除</button>
+                                        <div class="modal fade" id="reviewDelModal" tabindex="-1" role="dialog" aria-labelledby="reviewDelModalLabel" aria-hidden="true">
+                                        @component('components.del_modal')
+                                            このレビューを削除しますか
+                                        @endcomponent
+                                        </div>     
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    @endif
                 </div>
             </div>
             @endforeach

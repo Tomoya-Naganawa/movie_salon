@@ -25,6 +25,11 @@ class Review extends Model
         return $this->hasmany(Comment::class);
     }
 
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
     public function getReview(Int $review_id)
     {
         return $this->with(['movie', 'user', 'comments.user'])->where('id', $review_id)->first();
