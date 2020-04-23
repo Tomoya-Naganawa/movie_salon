@@ -35,7 +35,7 @@
                             echo '<i class="fas fa-star fa-2x" style="color:#ffcc00;"></i>' ; 
                             } 
                         @endphp
-                        <h5 class="mb-0 ml-3">{{ $movie->rating_avg }}<small class="text-white-50"> ユーザーレビュー({{ count($movie->reviews) }})</small></h5>
+                        <h5 class="mb-0 ml-3">{{ $movie->rating_avg }}<small class="text-white-50">　ユーザーレビュー({{ count($movie->reviews) }})</small></h5>
                     @else
                         <h6 class="mb-0 ml-3">まだレビューはありません</h6>
                     @endif             
@@ -62,7 +62,6 @@
             @endforeach
             </div>
         </div>
-         
     </div>
 </div>
 @stop

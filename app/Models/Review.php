@@ -35,6 +35,11 @@ class Review extends Model
         return $this->with(['movie', 'user', 'comments.user'])->where('id', $review_id)->first();
     }
 
+    public function getUserReview(Int $user_id)
+    {
+        return $this->with('movie')->where('user_id', $user_id)->orderBy('created_at', 'DESC')->paginate(5);
+    }
+
     public function reviewStore(Int $user_id, Array $data)
     {
         $this->user_id = $user_id;

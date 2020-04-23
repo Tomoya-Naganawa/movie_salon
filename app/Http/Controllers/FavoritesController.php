@@ -40,7 +40,7 @@ class FavoritesController extends Controller
         $is_favorite = $favorite->isFavorite($user_id, $review_id);
 
         if($is_favorite){
-            $favorite->storeFavorite($user->id, $review_id);
+            $favorite->destroyFavorite($favorite_id);
             return back();
         }
         return back();

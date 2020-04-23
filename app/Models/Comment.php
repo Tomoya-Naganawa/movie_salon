@@ -13,6 +13,16 @@ class Comment extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function review()
+    {
+        return $this->belongsTo(Review::class);
+    }
+
+    public function getUserComment(Int $user_id)
+    {
+        return $this->with(['review.user', 'review.movie'])->where('user_id', $user_id)->orderBy('created_at', 'DESC')->paginate(5);
+    }
+
     public function storeComment(Int $user_id, Array $data)
     {
         $this->user_id = $user_id;

@@ -32,4 +32,6 @@ Route::resource('comments', 'CommentsController', ['only' => ['store', 'destroy'
 
 Route::resource('favorites', 'FavoritesController', ['only' => ['store', 'destroy']]);
 
+Route::resource('users', 'usersController', ['only' => ['show', 'edit', 'update']]);
+
 Route::get('/home', 'HomeController@index')->name('home');

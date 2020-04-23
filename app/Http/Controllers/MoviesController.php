@@ -49,11 +49,9 @@ class MoviesController extends Controller
 
     public function show(Movie $movie)
     {
-        $user = auth()->user();
         $movie->getMovie($movie->id);
 
         return view('movies.show', [
-            'user' => $user,
             'movie' => $movie
         ]);
     }

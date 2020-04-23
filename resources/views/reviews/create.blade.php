@@ -7,12 +7,12 @@
             <form method="POST" action="{{ route('reviews.store') }}">
                 @csrf
 
-            <div class="form-group border-bottom">
-                <h4 class="font-weight-bold">作品名：{{ $movie_title }}</h4>
+            <div class="form-group">
+                <h4 class="border-bottom">作品名：{{ $movie_title }}</h4>
                 <input type="hidden" name="movie_id" value="{{ $movie_id }}">
             </div>
-            <div class="form-group pb-2 border-bottom">
-                <h5 class="font-weight-bold">総合評価</h5>
+            <div class="form-group py-2 border-bottom">
+                <h6>総合評価</h6>
                 <div class="stars justify-content-end form-control @invalid('rating')" id="rating" style="border:none;">
                     <input id="star1" type="radio" name="rating" value=5><label for="star1"><i class="fas fa-star fa-lg"></i></label>
                     <input id="star2" type="radio" name="rating" value=4><label for="star2"><i class="fas fa-star fa-lg"></i></label>
@@ -37,14 +37,14 @@
                     }
                 </style>
             </div>
-            <div class="form-group">
-                <h5 class="font-weight-bold">レビュータイトル</h5>
+            <div class="form-group pb-2">
+                <h6>レビュータイトル</h6>
                 <input class="form-control @invalid('heading')" name="heading" autocomplete="heading" placeholder="あなたがこの映画で最も伝えたいポイントは？">
                 @component('components.invalid_feedback', ['name' => 'heading'])
                 @endcomponent       
             </div>
             <div class="form-group">
-                <h5 class="font-weight-bold">本文</h5>
+                <h6>本文</h6>
                 <textarea class="form-control @invalid('text')" name="text" autocomplete="text" rows="20" placeholder="あなたがこの映画を見て感じたことを自由に書きましょう"></textarea>
                 @component('components.invalid_feedback', ['name' => 'text'])
                 @endcomponent       
