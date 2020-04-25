@@ -91,7 +91,6 @@
                         <a href="{{ url('/reviews/'.$review->id) }}" class="text-dark"><strong class="ml-2">{{ $review->heading }}</strong></a>
                     </div>
                     <p class="mb-0">{{ str_limit($review->text, 250) }}</p>
-                    @if ($review->user_id === Auth::user()->id) 
                     <div class="col-md-12 d-flex px-1">
                         @if (!in_array(Auth::user()->id, array_column($review->favorites->toArray(), 'user_id'), TRUE))
                             <form method="POST" action="{{ url('favorites/') }}" class="mb-0">
@@ -111,6 +110,7 @@
                         <p class="mb-0 ml-1 text-secondary">{{ count($review->favorites) }}</p>
                         <a href="{{ url('/reviews/'.$review->id) }}" class="btn text-primary p-0 ml-3"><i class="far fa-comment"></i></a>
                         <p class="mb-0 ml-1 text-secondary">{{ count($review->comments) }}</p>
+                        @if ($review->user_id === Auth::user()->id) 
                         <div class="d-flex justify-content-end flex-grow-1">
                             <div class="dropdown d-flex align-items-center">
                                 <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -132,8 +132,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    @endif
+                        @endif
+                    </div>   
                 </div>
             </div>
             @endforeach

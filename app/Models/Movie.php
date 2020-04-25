@@ -41,7 +41,7 @@ class Movie extends Model
 
     public function getMovie(Int $movie_id)
     {
-        return $this->with(['reviews.user', 'actors', 'genres'])->where('id', $movie_id)->first();
+        return $this->with(['reviews.user', 'reviews.favorites', 'actors', 'genres'])->where('id', $movie_id)->first();
     }
 
     public function getMovieTitle(Int $movie_id)
