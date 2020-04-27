@@ -110,29 +110,6 @@
                         <p class="mb-0 ml-1 text-secondary">{{ count($review->favorites) }}</p>
                         <a href="{{ url('/reviews/'.$review->id) }}" class="btn text-primary p-0 ml-3"><i class="far fa-comment"></i></a>
                         <p class="mb-0 ml-1 text-secondary">{{ count($review->comments) }}</p>
-                        @if ($review->user_id === Auth::user()->id) 
-                        <div class="d-flex justify-content-end flex-grow-1">
-                            <div class="dropdown d-flex align-items-center">
-                                <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-fw"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                                    <form method="POST" action="{{ url('/reviews/'.$review->id) }}" class="d-flex justify-content-center mb-0">
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <a href="{{ url('/reviews/'.$review->id.'/edit') }}" class="btn btn-sm text-primary p-0 mx-3"><i class="fas fa-edit"></i> 編集</a>
-                                        <button type="button" class="btn btn-sm btn-link text-danger p-0 mx-3" data-toggle="modal" data-target="#reviewDelModal"><i class="fas fa-trash-alt"></i> 削除</button>        
-                                    </form>
-                                </div>
-                                <div class="modal fade" id="reviewDelModal" tabindex="-1" role="dialog" aria-labelledby="reviewDelModalLabel" aria-hidden="true">
-                                @component('components.del_modal')
-                                    このレビューを削除しますか
-                                @endcomponent
-                                </div>
-                            </div>
-                        </div>
-                        @endif
                     </div>   
                 </div>
             </div>

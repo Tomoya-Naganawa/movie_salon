@@ -44,6 +44,11 @@ class Movie extends Model
         return $this->with(['reviews.user', 'reviews.favorites', 'actors', 'genres'])->where('id', $movie_id)->first();
     }
 
+    public function getAllMovie()
+    {
+        return $this->with('reviews')->orderBy('created_at', 'ASC')->paginate(6);
+    }
+
     public function getMovieTitle(Int $movie_id)
     {
         return $this->where('id', $movie_id)->value('title');

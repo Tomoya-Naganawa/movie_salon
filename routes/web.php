@@ -34,4 +34,6 @@ Route::resource('favorites', 'FavoritesController', ['only' => ['store', 'destro
 
 Route::resource('users', 'usersController', ['only' => ['show', 'edit', 'update']]);
 
+Route::get('/top', 'TopController@index');
+
 Route::get('/home', 'HomeController@index')->name('home');

@@ -30,9 +30,9 @@ class Review extends Model
         return $this->hasMany(Favorite::class);
     }
 
-    public function getAllreview()
+    public function getAllReview()
     {
-        return $this->with(['movie', 'user'])->where('user_id', $user_id)->orderBy('created_at', 'DESC')->paginate(5);
+        return $this->with(['movie', 'user', 'favorites'])->orderBy('created_at', 'DESC')->paginate(10);
     }
 
     public function getReview(Int $review_id)

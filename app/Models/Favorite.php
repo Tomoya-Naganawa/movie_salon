@@ -23,6 +23,11 @@ class Favorite extends Model
         return $this->with(['review.user','review.movie'])->where('user_id', $user_id)->get();
     }
 
+    public function setCountSubQuery()
+    {
+        return $this->selectRaw('review_id, COUNT(id) as favorite_count')->groupBy('review_id');
+    }
+
     public function storeFavorite(Int $user_id, Int $review_id)
     {
         $this->user_id = $user_id;

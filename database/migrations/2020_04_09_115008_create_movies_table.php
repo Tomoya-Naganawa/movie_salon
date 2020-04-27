@@ -22,7 +22,7 @@ class CreateMoviesTable extends Migration
             $table->float('rating_avg', 3, 2)->nullable()->comment('総合評価');
             $table->string('director')->nullable()->comment('監督');
             $table->string('tagline')->nullable()->comment('キャッチフレーズ');
-            $table->string('overview')->comment('あらすじ');
+            $table->string('overview', 1600)->comment('あらすじ');
             $table->timestamps();
 
             $table->index('id');
