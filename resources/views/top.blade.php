@@ -35,26 +35,35 @@
     <div class="container px-0">
         <div class="row">
             <div class="col-md-12 py-3">
-                <h3 class="font-weight-bold">Movie</h3>
+                <div class="d-flex">
+                    <h3 class="font-weight-bold">Movie</h3>
+                    <p class="mb-0 ml-3 align-self-center">デイリーアクセスランキング</p>
+                </div>
                 <div class="col-md-12 d-flex p-0">
-                @foreach($movies as $movie)
+                @for($i = 0; $i <= 5; $i++)
+                @if(empty($top_six_movies[$i]))
+                    @break
+                @endif
                 <div class="col-md-2 px-1">
                     <div class="card-body p-0">
-                        <img class="rounded img-fluid" src="{{'https://image.tmdb.org/t/p/w1280/'.$movie->poster_path}}" width="140" height="210">
+                        <div class="m-1">
+                            <h4 class="m-0 font-weight-bold"><span class="badge badge-pill badge-dark">{{$i + 1}}</span></h4>
+                        </div>
+                        <img class="rounded img-fluid shadow" src="{{'https://image.tmdb.org/t/p/w1280/'.$top_six_movies[$i]->poster_path}}" width="140" height="210">
                         <div class="d-flex py-1 align-items-baseline">
                         @php
-                        $stars = $movie->rating_avg;
-                        for($i = 1; $i <= $stars; $i++){ 
+                        $stars = $top_six_movies[$i]->rating_avg;
+                        for($a = 1; $a <= $stars; $a++){ 
                         echo '<i class="fas fa-star fa" style="color:#ffcc00;"></i>' ; 
                         }
                         @endphp
-                        <p class="mb-0">{{ $movie->rating_avg }}</p>
+                        <p class="mb-0">{{ $top_six_movies[$i]->rating_avg }}</p>
                         </div>
-                        <p class="font-weight-bold mb-0">{{ $movie->title }}</p>
-                        <p class="text-secondary mb-0">{{ $movie->release_date }}</p>
+                        <a class="text-dark" href="{{ url('movies/'. $top_six_movies[$i]->id) }}"><p class="font-weight-bold mb-0">{{ $top_six_movies[$i]->title }}</p></a>
+                        <p class="text-secondary mb-0">{{ $top_six_movies[$i]->release_date }}</p>
                     </div>
                 </div>
-                @endforeach
+                @endfor
                 </div>
             </div>
         </div>

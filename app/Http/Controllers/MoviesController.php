@@ -49,6 +49,9 @@ class MoviesController extends Controller
 
     public function show(Movie $movie)
     {
+        $ranking = new RankingModule;
+        $ranking->increment_view_ranking($movie->id);
+        
         $movie->getMovie($movie->id);
 
         return view('movies.show', [

@@ -49,6 +49,17 @@ class Movie extends Model
         return $this->with('reviews')->orderBy('created_at', 'ASC')->paginate(6);
     }
 
+    public function getRankInMovie(Array $results)
+    {
+        $top_six_movies_id = array_slice(array_keys($results), 0, 6);
+        $top_six_movies = Array();
+        foreach($top_six_movies_id as $top_six_movie_id){
+            $top_six_movie = $this->where('id', $top_six_movie_id)->first();
+            array_push($top_six_movies, $top_six_movie);
+        }
+        return $top_six_movies;
+    }
+
     public function getMovieTitle(Int $movie_id)
     {
         return $this->where('id', $movie_id)->value('title');

@@ -12,7 +12,9 @@ class TopController extends Controller
 {
     public function index(Request $request, Movie $movie, Review $review, Favorite $favorite)
     {
-        $movies = $movie->getAllMovie();
+        $ranking = new RankingModule;
+        $results = $ranking->get_ranking_all();
+        $top_six_movies = $movie->getRankInMovie($results);
 
         $favorite_count = $favorite->setCountSubQuery();
 
@@ -37,9 +39,9 @@ class TopController extends Controller
         $sort = "最新のレビュー";
     }    
 
-        return view('top', [
+    return view('top', [
             'reviews' => $reviews,
-            'movies' => $movies,
+            'top_six_movies' => $top_six_movies,
             'sort' => $sort
             ]);
     }
