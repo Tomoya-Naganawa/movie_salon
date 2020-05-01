@@ -27,6 +27,7 @@ class Movie extends Model
 
     public function storeMovie(Array $movie_array)
     {
+        $this->tmdb_id = $movie_array['id'];
         $this->title = $movie_array['title'];
         $this->release_date = $movie_array['release_date'];
         $this->runtime = $movie_array['runtime'];

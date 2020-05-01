@@ -15,6 +15,7 @@ class CreateMoviesTable extends Migration
     {
         Schema::create('movies', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('tmdb_id')->comment('TMDBの映画ID');
             $table->string('title')->comment('タイトル');
             $table->date('release_date')->nullable()->comment('公開日');
             $table->integer('runtime')->nullable()->comment('上映時間');
@@ -26,8 +27,7 @@ class CreateMoviesTable extends Migration
             $table->timestamps();
 
             $table->index('id');
-            $table->index('title');
-            $table->index('director');
+            $table->index('tmdb_id');
         });
     }
 
