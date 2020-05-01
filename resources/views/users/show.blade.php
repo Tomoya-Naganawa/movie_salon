@@ -10,12 +10,12 @@
                 <img src="{{ $user->profile_image }}" class="rounded-circle" width="85" height="85">
                 </div>
                 <div class="d-flex justify-content-center">
-                <div class="mt-3 d-flex flex-column align-items-center">
-                    <p class="mb-0">{{ $user->name }}</p>
-                </div>
+                    <div class="mt-3 d-flex flex-column align-items-center">
+                        <p class="mb-0">{{ $user->name }}</p>
+                    </div>
                 </div>
             </div>
-            <div class="p-2 flex-grow-1 d-flex align-items-end">
+            <div class="p-2 flex-grow-1 d-flex align-items-center">
                 <div class="flex-grow-1">
                     <div class="d-flex justify-content-center">
                         <div class="p-2 d-flex flex-column align-items-center">
@@ -64,8 +64,7 @@
                         @endphp
                         <a href="{{ url('/reviews/'.$review->id) }}" class="text-dark"><strong class="ml-2">{{ $review->heading }}</strong></a>
                     </div>
-                    <p class="mb-0">{{ str_limit($review->text, 250) }}</p>
-                    @if ($review->user_id === Auth::user()->id) 
+                    <p class="mb-0">{{ str_limit($review->text, 250) }}</p>              
                     <div class="col-md-12 d-flex px-1">
                         @if (!in_array(Auth::user()->id, array_column($review->favorites->toArray(), 'user_id'), TRUE))
                             <form method="POST" action="{{ url('favorites/') }}" class="mb-0">
@@ -85,6 +84,7 @@
                         <p class="mb-0 ml-1 text-secondary">{{ count($review->favorites) }}</p>
                         <a href="{{ url('/reviews/'.$review->id) }}" class="btn text-primary p-0 ml-3"><i class="far fa-comment"></i></a>
                         <p class="mb-0 ml-1 text-secondary">{{ count($review->comments) }}</p>
+                        @if ($review->user_id === Auth::user()->id)
                         <div class="d-flex justify-content-end flex-grow-1">
                             <div class="dropdown d-flex align-items-center">
                                 <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -106,8 +106,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    @endif
+                        @endif
+                    </div>    
                 </div>
             </div>
         @endforeach
@@ -129,10 +129,11 @@
                             echo '<i class="fas fa-star fa" style="color:#ffcc00;"></i>' ; 
                             }
                         @endphp
-                        <a href="{{ url('/reviews/'.$comment->review->id) }}" class="text-dark"><strong class="ml-2">{{ $comment->review->heading }}</strong>　へのコメント</a>
+                        <p class="m-0"><a href="{{ url('/reviews/'.$comment->review->id) }}" class="text-dark"><strong class="ml-2">{{ $comment->review->heading }}</strong></a>へのコメント</p>
                     </div>
                     <p class="m-0">{{ $comment->text }}</p>
-                    <div class="col-md-12 d-flex justify-content-end">
+                    @if ($comment->user_id === Auth::user()->id)
+                    <div class="col-md-12 d-flex justify-content-end p-0">
                         <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-ellipsis-v fa-fw"></i>
                         </a>
@@ -150,6 +151,7 @@
                             </form>
                         </div>    
                     </div>
+                    @endif
                 </div>
             </div>
         @endforeach

@@ -30,7 +30,7 @@
             <div class="card-header bg-white d-flex p-2">
                 <img src="{{ $review->user->profile_image }}" class="rounded-circle" width="30" height="30">
                 <div class="ml-2 d-flex flex-column">
-                    <a href="#" class="text-secondary">{{ $review->user->name }}</a>
+                    <a href="{{ url('users/'. $review->user->id)}}" class="text-secondary">{{ $review->user->name }}</a>
                 </div>
                 <div class="d-flex justify-content-end flex-grow-1">
                     <p class="mb-0 text-secondary">{{ $review->user->created_at->format('Y-m-d H:i') }}に投稿</p>
@@ -47,7 +47,7 @@
                     <a href="{{ url('/reviews/'.$review->id) }}" class="text-dark"><strong class="ml-2">{{ $review->heading }}</strong></a>
                 </div>
                 <p class="mb-0">{{ $review->text }}</p>
-                <div class="col-md-12 d-flex justify-content-end">
+                <div class="col-md-12 d-flex p-0">
                     @if (!in_array(Auth::user()->id, array_column($review->favorites->toArray(), 'user_id'), TRUE))
                     <form method="POST" action="{{ url('favorites/') }}" class="mb-0">
                         @csrf
@@ -66,6 +66,7 @@
                     <p class="mb-0 ml-1 text-secondary">{{ count($review->favorites) }}</p>
                     <a href="{{ url('/reviews/'.$review->id) }}" class="btn text-primary p-0 ml-3"><i class="far fa-comment"></i></a>
                     <p class="mb-0 ml-1 text-secondary">{{ count($review->comments) }}</p>
+                    @if ($review->user_id === Auth::user()->id)
                     <div class="d-flex justify-content-end flex-grow-1">
                         <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-ellipsis-v fa-fw"></i>
@@ -84,7 +85,8 @@
                         このレビューを削除しますか
                         @endcomponent
                         </div>
-                    </div>    
+                    </div>
+                    @endif    
                 </div>
             </div>
         </div>
@@ -102,7 +104,8 @@
             </div>
             <div class="card-body bg-white p-2">
                 <p class="m-0">{{ $comment->text }}</p>
-                <div class="col-md-12 d-flex justify-content-end">
+                @if ($comment->user_id === Auth::user()->id)
+                <div class="col-md-12 d-flex justify-content-end p-0">
                     <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-ellipsis-v fa-fw"></i>
                     </a>
@@ -121,6 +124,7 @@
                     @endcomponent
                     </div>     
                 </div>
+                @endif
             </div>              
         </div>
         @endforeach

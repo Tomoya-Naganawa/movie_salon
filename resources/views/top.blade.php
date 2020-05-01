@@ -92,7 +92,7 @@
                             <div class="card-header bg-white d-flex p-2">
                                 <img src="{{ $review->user->profile_image }}" class="rounded-circle" width="25" height="25">
                                 <div class="ml-2 d-flex flex-column align-items-center">
-                                    <a href="#" class="text-secondary">{{ $review->user->name }}</a>
+                                    <a href="{{ url('users/'. $review->user->id)}}" class="text-secondary">{{ $review->user->name }}</a>
                                 </div>
                                 <div class="d-flex justify-content-end align-items-center flex-grow-1">
                                     <p class="mb-0 text-secondary">{{ $review->created_at->format('Y-m-d H:i') }}に投稿</p>

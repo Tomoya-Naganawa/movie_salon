@@ -44,7 +44,7 @@ class MoviesController extends Controller
         
         $movie->actors()->attach($actors_id);
         
-        return redirect('home');
+        return redirect( url('movies/'.$movie->id) );
     }
 
     public function show(Movie $movie)

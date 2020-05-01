@@ -17,7 +17,6 @@ class RankingModule extends Controller
         } else {
             Redis::set($key, $value + 1);
         }
-        echo "view count:".Redis::get($key);
     }
 
     public function get_ranking_all(){

@@ -26,7 +26,7 @@
     <header>
         <div id="app">
         <nav class="navbar navbar-dark shadow-sm bg-dark">
-            <a class="navbar-brand font-weight-bold text-light" href="#">Movie salon</a>
+            <a class="navbar-brand font-weight-bold text-light" href="{{ route('top') }}">Movie salon</a>
             <ul class="nav justify-content-center">
                 @auth
                 <li class="nav-item">
@@ -62,7 +62,7 @@
         <nav class="bg-dark">
             <div class="collapse" id="navbarToggleExternalContent">
                 <div class="col-md-12 p-2">
-                    <form action="{{ url('/search') }}" method="GET">
+                    <form action="{{ url('/search') }}" method="GET" class="m-0">
                         <div class="form-row justify-content-end">
                             <div class="col-8">
                                 <input class="form-control" type="text" name="query" placeholder="タイトル名・俳優名を入力">
