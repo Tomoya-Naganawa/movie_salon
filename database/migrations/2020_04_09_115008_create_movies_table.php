@@ -21,7 +21,6 @@ class CreateMoviesTable extends Migration
             $table->integer('runtime')->nullable()->comment('上映時間');
             $table->string('poster_path')->nullable()->comment('イメージ画像');
             $table->float('rating_avg', 3, 2)->nullable()->comment('総合評価');
-            $table->string('director')->nullable()->comment('監督');
             $table->string('tagline')->nullable()->comment('キャッチフレーズ');
             $table->string('overview', 1600)->comment('あらすじ');
             $table->timestamps();

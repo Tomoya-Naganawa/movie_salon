@@ -13,10 +13,9 @@ class MoviesController extends Controller
 {
     public function store(Request $request, Movie $movie, Genre $genre, Actor $actor, $tmdb_movie_id)
     {
-        $movie_array = Tmdb::getMovieArray($tmdb_movie_id);
-        $credits_array = Tmdb::getCreditArray($tmdb_movie_id);
-
-        if (Movie::where('tmdb_id', $movie_array['id'])->doesntExist()) {
+        if (Movie::where('tmdb_id', $tmdb_movie_id)->doesntExist()) {
+            $movie_array = Tmdb::getMovieArray($tmdb_movie_id);
+            $credits_array = Tmdb::getCreditArray($tmdb_movie_id);
             $movie->storeMovie($movie_array);
 
             foreach ($movie_array['genres'] as $movie_genre) {
@@ -47,7 +46,7 @@ class MoviesController extends Controller
         
             return redirect(url('movies/'.$movie->id));
         }else{
-            $movie_id = Movie::where('tmdb_id', $movie_array['id'])->value('id');
+            $movie_id = Movie::where('tmdb_id', $tmdb_movie_id)->value('id');
             return redirect(url('movies/'.$movie_id));
         }
     }
