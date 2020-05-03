@@ -116,6 +116,7 @@
                                     </div>
                                 </div>    
                                 <div class="col-md-12 d-flex p-0">
+                                @auth
                                     @if (!in_array(Auth::user()->id, array_column($review->favorites->toArray(), 'user_id'), TRUE))
                                         <form method="POST" action="{{ url('favorites/') }}" class="mb-0">
                                             @csrf
@@ -131,6 +132,9 @@
                                             <button type="submit" class="btn btn-link p-0 border-0 text-danger"><i class="fas fa-heart fa-fw"></i></button>
                                         </form>
                                     @endif
+                                @else  
+                                    <a href="{{ route('login') }}" class="btn text-primary p-0"><i class="far fa-heart fa-fw"></i></a>
+                                @endauth 
                                     <p class="mb-0 ml-1 text-secondary">{{ count($review->favorites) }}</p>
                                     <a href="{{ url('/reviews/'.$review->id) }}" class="btn text-primary p-0 ml-3"><i class="far fa-comment"></i></a>
                                     <p class="mb-0 ml-1 text-secondary">{{ count($review->comments) }}</p>
