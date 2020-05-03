@@ -45,6 +45,11 @@ class Review extends Model
         return $this->with('movie')->where('user_id', $user_id)->orderBy('created_at', 'DESC')->paginate(5);
     }
 
+    public function getReviewCount(Int $user_id)
+    {
+        return $this->where('user_id', $user_id)->count();
+    }
+
     public function reviewStore(Int $user_id, Array $data)
     {
         $this->user_id = $user_id;

@@ -22,7 +22,9 @@ class UsersController extends Controller
     {
         $login_user = auth()->user();
         $reviews = $review->getUserReview($user->id);
+        $review_count = $review->getReviewCount($user->id);
         $comments = $comment->getUserComment($user->id);
+        $comment_count = $comment->getCommentCount($user->id);
         $favorites = $favorite->getUserFavorite($user->id);
 
         return view('users.show', [
@@ -30,6 +32,8 @@ class UsersController extends Controller
             'reviews' => $reviews,
             'comments' => $comments,
             'favorites' => $favorites,
+            'review_count' => $review_count,
+            'comment_count' => $comment_count
         ]);
     }
 

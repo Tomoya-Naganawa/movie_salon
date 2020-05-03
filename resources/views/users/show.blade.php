@@ -19,11 +19,11 @@
                 <div class="flex-grow-1">
                     <div class="d-flex justify-content-center">
                         <div class="p-2 d-flex flex-column align-items-center">
-                            <h5>{{ count($reviews) }}</h5>
+                            <h5>{{ $review_count }}</h5>
                             <small class="text-secondary">レビュー</small>
                         </div>
                         <div class="p-2 d-flex flex-column align-items-center">
-                            <h5>{{ count($comments) }}</h5>
+                            <h5>{{ $comment_count }}</h5>
                             <small class="text-secondary">コメント</small>
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                 <div class="card-body bg-white p-2">
                     <div class="d-flex align-items-center py-2">
                         <img class="rounded" src="{{'https://image.tmdb.org/t/p/w1280/'.$review->movie->poster_path}}" height="75" width="50">
-                        <strong class="ml-4">{{ $review->movie->title.'('.$review->movie->release_date.')' }}</strong>
+                        <a href="{{ url('movies/'. $review->movie->id) }}" class="text-dark"><strong class="ml-4">{{ $review->movie->title.'('.$review->movie->release_date.')' }}</strong></a>
                     </div>
                     <div class="d-flex align-items-center mb-2">
                         @php
@@ -90,20 +90,20 @@
                                 <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-ellipsis-v fa-fw"></i>
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                                    <form method="POST" action="{{ url('/reviews/'.$review->id) }}" class="d-flex justify-content-center">
-                                        @csrf
-                                        @method('DELETE')
+                                <form method="POST" action="{{ url('/reviews/'.$review->id) }}">
+                                    @csrf
+                                    @method('DELETE')
 
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">  
                                         <a href="{{ url('/reviews/'.$review->id.'/edit') }}" class="btn btn-sm text-primary p-0 mx-3"><i class="fas fa-edit"></i> 編集</a>
                                         <button type="button" class="btn btn-sm btn-link text-danger p-0 mx-3" data-toggle="modal" data-target="#reviewDelModal"><i class="fas fa-trash-alt"></i> 削除</button>         
-                                    </form>
-                                </div>
-                                <div class="modal fade" id="reviewDelModal" tabindex="-1" role="dialog" aria-labelledby="reviewDelModalLabel" aria-hidden="true">
-                                @component('components.del_modal')
-                                    このレビューを削除しますか
-                                @endcomponent
-                                </div>
+                                    </div>
+                                    <div class="modal fade" id="reviewDelModal" tabindex="-1" role="dialog" aria-labelledby="reviewDelModalLabel" aria-hidden="true">
+                                    @component('components.del_modal')
+                                        このレビューを削除しますか
+                                    @endcomponent
+                                    </div>
+                                </form>   
                             </div>
                         </div>
                         @endif
@@ -112,6 +112,9 @@
             </div>
         @endforeach
         @endif
+        <div class="my-4 d-flex justify-content-center">
+            {{ $reviews->links() }}
+        </div>
         </div>
         <div class="tab-pane fade" id="nav-comment" role="tabpanel" aria-labelledby="nav-comment-tab">
         @if (isset($comments))
@@ -120,7 +123,7 @@
                 <div class="card-body bg-white p-2">
                     <div class="d-flex align-items-center py-2">
                         <img class="rounded" src="{{'https://image.tmdb.org/t/p/w1280/'.$comment->review->movie->poster_path}}" height="75" width="50">
-                        <strong class="ml-4">{{ $comment->review->movie->title.'('.$comment->review->movie->release_date.')' }}</strong>
+                        <a href="{{ url('movies/'. $comment->review->movie->id) }}" class="text-dark"><strong class="ml-4">{{ $comment->review->movie->title.'('.$comment->review->movie->release_date.')' }}</strong></a>
                     </div>
                     <div class="d-flex align-items-center mb-2">
                         @php
@@ -137,19 +140,19 @@
                         <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-ellipsis-v fa-fw"></i>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                            <form method="POST" action="{{ url('/comments/'.$comment->id) }}" class="d-flex justify-content-center pb-0">
-                                @csrf
-                                @method('DELETE')
+                        <form method="POST" action="{{ url('/comments/'.$comment->id) }}">
+                            @csrf
+                            @method('DELETE')
 
-                                <button type="button" class="btn btn-sm btn-link text-danger p-0" data-toggle="modal" data-target="#commentDelModal"><i class="fas fa-trash-alt"></i> 削除</button>
-                                <div class="modal fade" id="commentDelModal" tabindex="-1" role="dialog" aria-labelledby="commentDelModalLabel" aria-hidden="true">
-                                @component('components.del_modal')
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                <button type="button" class="btn btn-sm btn-link text-danger p-0 ml-5" data-toggle="modal" data-target="#commentDelModal"><i class="fas fa-trash-alt"></i> 削除</button>
+                            </div>
+                            <div class="modal fade" id="commentDelModal" tabindex="-1" role="dialog" aria-labelledby="commentDelModalLabel" aria-hidden="true">
+                            @component('components.del_modal')
                                 このコメントを削除しますか
-                                @endcomponent
-                                </div>     
-                            </form>
-                        </div>    
+                            @endcomponent
+                            </div>
+                        </form>    
                     </div>
                     @endif
                 </div>
