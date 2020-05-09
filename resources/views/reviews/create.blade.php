@@ -33,6 +33,6 @@
     @endcomponent       
 </div>
 <div class="form-group text-right">
-    <button type="submit" class="btn btn-primary">作成</button>   
+    <button type="submit" class="btn btn-primary">投稿</button>   
 </div>
 @endsection 

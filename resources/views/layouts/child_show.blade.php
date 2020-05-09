@@ -2,7 +2,7 @@
 
 <style>
     body {
-        background: radial-gradient(#777777	, #333333);
+        background: radial-gradient(#777777 , #222222);
     }
 
     .review-content {

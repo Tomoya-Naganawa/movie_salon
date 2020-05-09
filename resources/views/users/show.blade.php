@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="col-md-4">
-    <div class="card shadow">
+    <div class="card shadow mb-4">
         <div class="d-flex">
             <div class="p-2 flex-column justify-content-center">
                 <div class="d-flex justify-content-center">
@@ -64,7 +64,11 @@
                         @endphp
                         <a href="{{ url('/reviews/'.$review->id) }}" class="text-dark"><strong class="ml-2">{{ $review->heading }}</strong></a>
                     </div>
-                    <p class="mb-0">{{ str_limit($review->text, 250) }}</p>              
+                    @if(mb_strlen($review->text) >= 135)
+                    <readmore-component text="{{ $review->text }}"></readmore-component>
+                    @else
+                    <p class="mb-0">{{ $review->text }}</p>
+                    @endif              
                     <div class="col-md-12 d-flex px-1">
                         @if (!in_array(Auth::user()->id, array_column($review->favorites->toArray(), 'user_id'), TRUE))
                             <form method="POST" action="{{ url('favorites/') }}" class="mb-0">
@@ -178,7 +182,11 @@
                     @endphp
                     <a href="{{ url('/reviews/'.$favorite->review->id) }}" class="text-dark"><strong class="ml-2">{{ $favorite->review->heading }}</strong></a>
                 </div>
-                <p class="mb-0">{{ str_limit($favorite->review->text, 250) }}</p>
+                @if(mb_strlen($favorite->review->text) >= 135)
+                <readmore-component text="{{ $favorite->review->text }}"></readmore-component>
+                @else
+                <p class="mb-0">{{ $favorite->review->text }}</p>
+                @endif 
                 @if ($favorite->review->user_id === Auth::user()->id) 
                 <div class="col-md-12 d-flex px-1">
                     @if (!in_array(Auth::user()->id, array_column($favorite->review->favorites->toArray(), 'user_id'), TRUE))

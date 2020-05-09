@@ -51,7 +51,7 @@
     <h5 class="text-white-50 ml-3">主な出演者</h5>
     <div class="col-md-12 d-flex justfy-content-center">
     @foreach($movie->actors as $actor)
-        <div class="card w-25 mx-1" style="background-color:#333333;">
+        <div class="card w-25 mx-1" style="background-color:#444444;">
             <div class="card-body p-0 d-flex">
                 <img class="rounded-left img-fluid" src="{{'https://image.tmdb.org/t/p/w1280/'.$actor->profile_path }}" height="90" width="60">
                 <div class="align-self-center mx-2">
@@ -90,7 +90,11 @@
                         @endphp
                         <a href="{{ url('/reviews/'.$review->id) }}" class="text-dark"><strong class="ml-2">{{ $review->heading }}</strong></a>
                     </div>
-                    <p class="mb-0">{{ str_limit($review->text, 250) }}</p>
+                    @if(mb_strlen($review->text) >= 135)
+                    <readmore-component text="{{ $review->text }}"></readmore-component>
+                    @else
+                    <p class="mb-0">{{ $review->text }}</p>
+                    @endif
                     <div class="col-md-12 d-flex px-1">
                         @if (!in_array(Auth::user()->id, array_column($review->favorites->toArray(), 'user_id'), TRUE))
                             <form method="POST" action="{{ url('favorites/') }}" class="mb-0">

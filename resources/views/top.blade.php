@@ -3,11 +3,11 @@
 @section('main')
 <main style="background: radial-gradient(#777777, #333333);">
     <div class="container px-0">
-        <div class="row">   
+        <div class="row">
             <div class="col-md-12 p-0 d-flex align-items-center text-light">
-                <div class="py-4">
+                <div class="col-md-12 py-4">
                     <h1 class="font-weight-bold">welcome!</h1>
-                    <h4>This defines a flex container; inline or block depending on the given value. It enables a flex context for all its direct children.</h4>
+                    <p>映画に出会える場。映画を探そう。レビューを書こう</p>
                     <div class="d-flex justify-content-center">
                         <div class="col-md-11">
                             <form action="{{ url('/search') }}" method="GET" class="mt-3">
@@ -111,7 +111,11 @@
                                                 }
                                             @endphp
                                             <a href="{{ url('/reviews/'.$review->id) }}" class="text-dark ml-2"><strong>{{ $review->heading }}</strong></a>
-                                            <p class="mb-0">{{ str_limit($review->text, 140) }}</p>
+                                            @if(mb_strlen($review->text) >= 135)
+                                            <readmore-component text="{{ $review->text }}"></readmore-component>
+                                            @else
+                                            <p class="mb-0">{{ $review->text }}</p>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>    

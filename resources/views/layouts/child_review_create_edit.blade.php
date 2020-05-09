@@ -1,7 +1,7 @@
 @extends('layouts.parent')
 
 @section('main')
-<style>
+<div is="style">
     .stars{
         display: flex;
         flex-direction: row-reverse;
@@ -15,7 +15,7 @@
     .stars input[type='radio']:checked ~ label{
         color: #ffcc00;
     }
-</style>
+</div>
 
 <main class="content">
     <div class="container">
