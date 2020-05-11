@@ -68,7 +68,7 @@
             </div>
             @endif
             <div class="d-flex justify-content-end p-3">
-                <a class="btn btn-primary" href="{{ url('/movies/'.$movie_array['id']).'/store' }}">コメントする（仮）</a>
+                <a class="btn btn-primary" href="{{ url('/movies/'.$movie_array['id']).'/store' }}">レビューを書く</a>
             </div>
         </div>   
     </div>

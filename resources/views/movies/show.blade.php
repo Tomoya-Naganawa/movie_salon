@@ -28,12 +28,7 @@
             </div>
             <div class="d-flex align-items-end mt-2 mb-4">                           
                 @if(isset($movie->rating_avg))
-                    @php
-                    $stars = $movie->rating_avg;
-                    for($i = 1; $i <= $stars; $i++){ 
-                        echo '<i class="fas fa-star fa-2x" style="color:#ffcc00;"></i>' ; 
-                        } 
-                    @endphp
+                    {{star_rating($movie->rating_avg, 'fa-2x')}}
                     <h5 class="mb-0 ml-3">{{ $movie->rating_avg }}<small class="text-white-50">　ユーザーレビュー({{ count($movie->reviews) }})</small></h5>
                 @else
                     <h6>まだレビューはありません</h6>
@@ -82,12 +77,7 @@
                 </div>    
                 <div class="card-body bg-white p-2">
                     <div class="d-flex align-items-center mb-2">
-                        @php
-                        $stars = $review->rating;
-                        for($i = 1; $i <= $stars; $i++){ 
-                            echo '<i class="fas fa-star fa" style="color:#ffcc00;"></i>' ; 
-                            }
-                        @endphp
+                        {{star_rating($review->rating, 'fa')}}
                         <a href="{{ url('/reviews/'.$review->id) }}" class="text-dark"><strong class="ml-2">{{ $review->heading }}</strong></a>
                     </div>
                     @if(mb_strlen($review->text) >= 135)
@@ -95,21 +85,11 @@
                     @else
                     <p class="mb-0">{{ $review->text }}</p>
                     @endif
-                    <div class="col-md-12 d-flex px-1">
+                    <div class="col-md-12 d-flex p-0">
                         @if (!in_array(Auth::user()->id, array_column($review->favorites->toArray(), 'user_id'), TRUE))
-                            <form method="POST" action="{{ url('favorites/') }}" class="mb-0">
-                                @csrf
-
-                                <input type="hidden" name="review_id" value="{{ $review->id }}">
-                                <button type="submit" class="btn btn-link p-0 border-0 text-primary"><i class="far fa-heart fa-fw"></i></button>
-                            </form>
+                            {!!add_favorite_form($review->id)!!}
                         @else
-                            <form method="POST" action="{{ url('favorites/' .array_column($review->favorites->toArray(), 'id', 'user_id')[Auth::user()->id]) }}" class="mb-0">
-                                @csrf
-                                @method('DELETE')
-
-                                <button type="submit" class="btn btn-link p-0 border-0 text-danger"><i class="fas fa-heart fa-fw"></i></button>
-                            </form>
+                            {!!delete_favorite_form(url('favorites/' .array_column($review->favorites->toArray(), 'id', 'user_id')[Auth::user()->id]))!!}
                         @endif
                         <p class="mb-0 ml-1 text-secondary">{{ count($review->favorites) }}</p>
                         <a href="{{ url('/reviews/'.$review->id) }}" class="btn text-primary p-0 ml-3"><i class="far fa-comment"></i></a>

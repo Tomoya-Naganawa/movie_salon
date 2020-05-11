@@ -56,12 +56,7 @@
                         <a href="{{ url('movies/'. $review->movie->id) }}" class="text-dark"><strong class="ml-4">{{ $review->movie->title.'('.$review->movie->release_date.')' }}</strong></a>
                     </div>
                     <div class="d-flex align-items-center mb-2">
-                        @php
-                        $stars = $review->rating;
-                        for($i = 1; $i <= $stars; $i++){ 
-                            echo '<i class="fas fa-star fa" style="color:#ffcc00;"></i>' ; 
-                            }
-                        @endphp
+                        {{star_rating($review->rating, 'fa')}}
                         <a href="{{ url('/reviews/'.$review->id) }}" class="text-dark"><strong class="ml-2">{{ $review->heading }}</strong></a>
                     </div>
                     @if(mb_strlen($review->text) >= 135)
@@ -71,19 +66,9 @@
                     @endif              
                     <div class="col-md-12 d-flex px-1">
                         @if (!in_array(Auth::user()->id, array_column($review->favorites->toArray(), 'user_id'), TRUE))
-                            <form method="POST" action="{{ url('favorites/') }}" class="mb-0">
-                                @csrf
-
-                                <input type="hidden" name="review_id" value="{{ $review->id }}">
-                                <button type="submit" class="btn btn-link p-0 border-0 text-primary"><i class="far fa-heart fa-fw"></i></button>
-                            </form>
+                            {!!add_favorite_form($review->id)!!}
                         @else
-                            <form method="POST" action="{{ url('favorites/' .array_column($review->favorites->toArray(), 'id', 'user_id')[Auth::user()->id]) }}" class="mb-0">
-                                @csrf
-                                @method('DELETE')
-
-                                <button type="submit" class="btn btn-link p-0 border-0 text-danger"><i class="fas fa-heart fa-fw"></i></button>
-                            </form>
+                            {!!delete_favorite_form(url('favorites/' .array_column($review->favorites->toArray(), 'id', 'user_id')[Auth::user()->id]))!!}
                         @endif
                         <p class="mb-0 ml-1 text-secondary">{{ count($review->favorites) }}</p>
                         <a href="{{ url('/reviews/'.$review->id) }}" class="btn text-primary p-0 ml-3"><i class="far fa-comment"></i></a>
@@ -130,12 +115,7 @@
                         <a href="{{ url('movies/'. $comment->review->movie->id) }}" class="text-dark"><strong class="ml-4">{{ $comment->review->movie->title.'('.$comment->review->movie->release_date.')' }}</strong></a>
                     </div>
                     <div class="d-flex align-items-center mb-2">
-                        @php
-                        $stars = $comment->review->rating;
-                        for($i = 1; $i <= $stars; $i++){ 
-                            echo '<i class="fas fa-star fa" style="color:#ffcc00;"></i>' ; 
-                            }
-                        @endphp
+                        {{star_rating($comment->review->rating, 'fa')}}
                         <p class="m-0"><a href="{{ url('/reviews/'.$comment->review->id) }}" class="text-dark"><strong class="ml-2">{{ $comment->review->heading }}</strong></a>へのコメント</p>
                     </div>
                     <p class="m-0">{{ $comment->text }}</p>
@@ -174,41 +154,24 @@
                     <strong class="ml-4">{{ $favorite->review->movie->title.'('.$favorite->review->movie->release_date.')' }}</strong>
                 </div>
                 <div class="d-flex align-items-center mb-2">
-                    @php
-                    $stars = $favorite->review->rating;
-                    for($i = 1; $i <= $stars; $i++){ 
-                        echo '<i class="fas fa-star fa" style="color:#ffcc00;"></i>' ; 
-                        }
-                    @endphp
+                    {{star_rating($favorite->review->rating, 'fa')}}
                     <a href="{{ url('/reviews/'.$favorite->review->id) }}" class="text-dark"><strong class="ml-2">{{ $favorite->review->heading }}</strong></a>
                 </div>
                 @if(mb_strlen($favorite->review->text) >= 135)
                 <readmore-component text="{{ $favorite->review->text }}"></readmore-component>
                 @else
                 <p class="mb-0">{{ $favorite->review->text }}</p>
-                @endif 
-                @if ($favorite->review->user_id === Auth::user()->id) 
+                @endif  
                 <div class="col-md-12 d-flex px-1">
                     @if (!in_array(Auth::user()->id, array_column($favorite->review->favorites->toArray(), 'user_id'), TRUE))
-                        <form method="POST" action="{{ url('favorites/') }}" class="mb-0">
-                            @csrf
-
-                            <input type="hidden" name="review_id" value="{{ $favorite->review->id }}">
-                            <button type="submit" class="btn btn-link p-0 border-0 text-primary"><i class="far fa-heart fa-fw"></i></button>
-                        </form>
+                        {!!add_favorite_form($favorite->review->id)!!}
                     @else
-                        <form method="POST" action="{{ url('favorites/' .array_column($favorite->review->favorites->toArray(), 'id', 'user_id')[Auth::user()->id]) }}" class="mb-0">
-                            @csrf
-                            @method('DELETE')
-
-                            <button type="submit" class="btn btn-link p-0 border-0 text-danger"><i class="fas fa-heart fa-fw"></i></button>
-                        </form>
+                        {!!delete_favorite_form(url('favorites/' .array_column($favorite->review->favorites->toArray(), 'id', 'user_id')[Auth::user()->id]))!!}
                     @endif
                     <p class="mb-0 ml-1 text-secondary">{{ count($favorite->review->favorites) }}</p>
                     <a href="{{ url('/reviews/'.$favorite->review->id) }}" class="btn text-primary p-0 ml-3"><i class="far fa-comment"></i></a>
                     <p class="mb-0 ml-1 text-secondary">{{ count($favorite->review->comments) }}</p>
                 </div>
-                @endif
             </div>
         </div>
         @endforeach

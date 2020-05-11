@@ -51,13 +51,8 @@
                         </div>
                         <img class="rounded img-fluid shadow" src="{{'https://image.tmdb.org/t/p/w1280/'.$top_six_movies[$i]->poster_path}}" width="140" height="210">
                         <div class="d-flex py-1 align-items-baseline">
-                        @php
-                        $stars = $top_six_movies[$i]->rating_avg;
-                        for($a = 1; $a <= $stars; $a++){ 
-                        echo '<i class="fas fa-star fa" style="color:#ffcc00;"></i>' ; 
-                        }
-                        @endphp
-                        <p class="mb-0">{{ $top_six_movies[$i]->rating_avg }}</p>
+                        {{star_rating($top_six_movies[$i]->rating_avg, 'fa')}}
+                        <p class="mb-0">{{ $top_six_movies[$i]->rating_avg}}</p>
                         </div>
                         <a class="text-dark" href="{{ url('movies/'. $top_six_movies[$i]->id) }}"><p class="font-weight-bold mb-0">{{ $top_six_movies[$i]->title }}</p></a>
                         <p class="text-secondary mb-0">{{ $top_six_movies[$i]->release_date }}</p>
@@ -104,12 +99,7 @@
                                     <div>
                                         <a href="{{ url('movies/'. $review->movie->id) }}" class="text-secondary mx-3">{{ $review->movie->title.'('.$review->movie->release_date.')' }}</a>
                                         <div class="align-items-center mx-3 my-2">
-                                            @php
-                                            $stars = $review->rating;
-                                            for($i = 1; $i <= $stars; $i++){ 
-                                                echo '<i class="fas fa-star fa" style="color:#ffcc00;"></i>' ; 
-                                                }
-                                            @endphp
+                                            {{star_rating($review->rating, 'fa')}}
                                             <a href="{{ url('/reviews/'.$review->id) }}" class="text-dark ml-2"><strong>{{ $review->heading }}</strong></a>
                                             @if(mb_strlen($review->text) >= 135)
                                             <readmore-component text="{{ $review->text }}"></readmore-component>
@@ -122,19 +112,9 @@
                                 <div class="col-md-12 d-flex p-0">
                                 @auth
                                     @if (!in_array(Auth::user()->id, array_column($review->favorites->toArray(), 'user_id'), TRUE))
-                                        <form method="POST" action="{{ url('favorites/') }}" class="mb-0">
-                                            @csrf
-
-                                            <input type="hidden" name="review_id" value="{{ $review->id }}">
-                                            <button type="submit" class="btn btn-link p-0 border-0 text-primary"><i class="far fa-heart fa-fw"></i></button>
-                                        </form>
+                                        {!!add_favorite_form($review->id)!!}
                                     @else
-                                        <form method="POST" action="{{ url('favorites/' .array_column($review->favorites->toArray(), 'id', 'user_id')[Auth::user()->id]) }}" class="mb-0">
-                                            @csrf
-                                            @method('DELETE')
-
-                                            <button type="submit" class="btn btn-link p-0 border-0 text-danger"><i class="fas fa-heart fa-fw"></i></button>
-                                        </form>
+                                        {!!delete_favorite_form(url('favorites/' .array_column($review->favorites->toArray(), 'id', 'user_id')[Auth::user()->id]))!!}
                                     @endif
                                 @else  
                                     <a href="{{ route('login') }}" class="btn text-primary p-0"><i class="far fa-heart fa-fw"></i></a>

@@ -49,19 +49,9 @@
                 <p class="mb-0">{{ $review->text }}</p>
                 <div class="col-md-12 d-flex p-0">
                     @if (!in_array(Auth::user()->id, array_column($review->favorites->toArray(), 'user_id'), TRUE))
-                    <form method="POST" action="{{ url('favorites/') }}" class="mb-0">
-                        @csrf
-
-                        <input type="hidden" name="review_id" value="{{ $review->id }}">
-                        <button type="submit" class="btn btn-link p-0 border-0 text-primary"><i class="far fa-heart fa-fw"></i></button>
-                    </form>
+                        {!!add_favorite_form($review->id)!!}
                     @else
-                    <form method="POST" action="{{ url('favorites/' .array_column($review->favorites->toArray(), 'id', 'user_id')[Auth::user()->id]) }}" class="mb-0">
-                        @csrf
-                        @method('DELETE')
-
-                        <button type="submit" class="btn btn-link p-0 border-0 text-danger"><i class="fas fa-heart fa-fw"></i></button>
-                    </form>
+                        {!!delete_favorite_form(url('favorites/' .array_column($review->favorites->toArray(), 'id', 'user_id')[Auth::user()->id]))!!}
                     @endif
                     <p class="mb-0 ml-1 text-secondary">{{ count($review->favorites) }}</p>
                     <a href="{{ url('/reviews/'.$review->id) }}" class="btn text-primary p-0 ml-3"><i class="far fa-comment"></i></a>
