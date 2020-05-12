@@ -23,6 +23,7 @@ class Favorite extends Model
         return $this->with(['review.user','review.movie'])->where('user_id', $user_id)->get();
     }
 
+    //レビュー毎にいいね数を取得
     public function setCountSubQuery()
     {
         return $this->selectRaw('review_id, COUNT(id) as favorite_count')->groupBy('review_id');

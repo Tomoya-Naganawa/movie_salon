@@ -14,6 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
 Route::get('/top', 'TopController@index')->name('top');
 Route::get('/home', 'HomeController@index')->name('home');
 

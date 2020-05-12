@@ -7,6 +7,7 @@ use Redis;
 
 class RankingModule extends Controller
 {
+    //閲覧数をインクリメント
     public function increment_view_ranking($id){
         $key = "ranking-"."id:".$id;
 
@@ -19,6 +20,7 @@ class RankingModule extends Controller
         }
     }
 
+    //ランキング結果を配列で取得
     public function get_ranking_all(){
         $keys = Redis::keys('ranking-*');
         $results = Array();

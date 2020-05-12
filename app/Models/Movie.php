@@ -50,6 +50,12 @@ class Movie extends Model
         return $this->with('reviews')->orderBy('created_at', 'ASC')->paginate(6);
     }
 
+    public function getMovieTitle(Int $movie_id)
+    {
+        return $this->where('id', $movie_id)->value('title');
+    }
+
+    //上位6までのidを取得
     public function getRankInMovie(Array $results)
     {
         $top_six_movies_id = array_slice(array_keys($results), 0, 6);
@@ -61,11 +67,7 @@ class Movie extends Model
         return $top_six_movies;
     }
 
-    public function getMovieTitle(Int $movie_id)
-    {
-        return $this->where('id', $movie_id)->value('title');
-    }
-
+    //レビューのratingからrating_avgを更新
     public function ratingAvgUpdate(Int $movie_id)
     {
         $rating_avg = $this->with('reviews')->where('id', $movie_id)->first()->reviews->avg('rating');

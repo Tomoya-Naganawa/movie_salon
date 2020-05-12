@@ -1,7 +1,6 @@
 @extends('layouts.child')
 
 @section('content')
-
 <div class="col-md-12 d-flex px-0">
     <div class="col-md-3 px-2">
         <div class="card d-flex w-100">
@@ -13,12 +12,7 @@
                     <h6><a href="{{ url('movies/'. $review->movie->id) }}" class="font-weight-bold text-dark">{{ $review->movie->title }}</a></h6>
                     <h6 class="text-dark">({{ $review->movie->release_date }})</h6>
                     <div class="d-flex pt-1">            
-                        @php
-                        $stars = $review->movie->rating_avg;
-                        for($i = 1; $i <= $stars; $i++){ 
-                            echo '<i class="fas fa-star fa" style="color:#ffcc00;"></i>' ; 
-                            } 
-                        @endphp
+                        {{star_rating($review->rating, 'fa')}}
                         <h6 class="mb-0 ml-2">{{ $review->movie->rating_avg }}</h6>             
                     </div>
                 </div>
@@ -38,12 +32,7 @@
             </div>    
             <div class="card-body bg-white p-2">
                 <div class="d-flex align-items-center mb-2">
-                    @php
-                    $stars = $review->rating;
-                    for($i = 1; $i <= $stars; $i++){ 
-                        echo '<i class="fas fa-star fa" style="color:#ffcc00;"></i>' ; 
-                        } 
-                    @endphp
+                    {{star_rating($review->rating, 'fa')}}
                     <a href="{{ url('/reviews/'.$review->id) }}" class="text-dark"><strong class="ml-2">{{ $review->heading }}</strong></a>
                 </div>
                 <p class="mb-0">{{ $review->text }}</p>
@@ -134,5 +123,4 @@
         </div>
     </div>
 </div>
-    
 @endsection
