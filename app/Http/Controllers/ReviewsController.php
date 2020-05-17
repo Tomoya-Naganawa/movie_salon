@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Review;
 use App\Models\Movie;
@@ -46,9 +47,12 @@ class ReviewsController extends Controller
             'text'     => ['required', 'string', 'max:2500']
         ]);
         $validator->validate();
-        $review->reviewStore($user->id, $data);
-        $movie->ratingAvgUpdate($data['movie_id']);
 
+        DB::transaction(function() use($user, $data, $review, $movie){
+            $review->reviewStore($user->id, $data);
+            $movie->ratingAvgUpdate($data['movie_id']);
+        });
+        
         return redirect( url('/movies/'.$data['movie_id']) );
     }
 
@@ -84,8 +88,11 @@ class ReviewsController extends Controller
             'text'     => ['required', 'string', 'max:2500']
         ]);
         $validator->validate();
-        $review->updateReview($data);
-        $movie->ratingAvgUpdate($review->movie_id);
+
+        DB::transaction(function() use($data, $review, $movie){
+            $review->updateReview($data);
+            $movie->ratingAvgUpdate($review->movie_id);
+        });
 
         return redirect( url('/movies/'.$review->movie_id) );
     }
@@ -98,9 +105,11 @@ class ReviewsController extends Controller
      */
     public function destroy(Review $review, Movie $movie)
     {
-        $review->destroyReview($review->id);
-        $movie->ratingAvgUpdate($review->movie_id);
-
-        return back();
+        DB::transaction(function() use($review, $movie){
+            $review->destroyReview($review->id);
+            $movie->ratingAvgUpdate($review->movie_id);
+        });
+        
+        return redirect( url('/movies/'.$review->movie_id) );
     }
 }
