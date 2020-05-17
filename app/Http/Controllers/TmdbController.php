@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Libraries\tmdbService;
+use App\Libraries\TmdbService;
 
 class TmdbController extends Controller
 {
@@ -17,7 +17,7 @@ class TmdbController extends Controller
         ]);
         $validator->validate();
 
-        $search_array = tmdbService::getSearchArray($request);
+        $search_array = TmdbService::getSearchArray($request);
 
         return view('tmdbs.search', [
             'search_array' => $search_array,
@@ -29,9 +29,9 @@ class TmdbController extends Controller
     
     public function show($tmdb_movie_id)
     {
-        $movie_array = tmdbService::getMovieArray($tmdb_movie_id);
+        $movie_array = TmdbService::getMovieArray($tmdb_movie_id);
         
-        $credits_array = tmdbService::getCreditArray($tmdb_movie_id);
+        $credits_array = TmdbService::getCreditArray($tmdb_movie_id);
 
         return view('tmdbs.show', [
             'movie_array' => $movie_array,
