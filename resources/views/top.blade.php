@@ -70,7 +70,7 @@
                     <div class="d-flex">
                     <h3 class="font-weight-bold">Review</h3>
                     @if(isset($sort))
-                    <p class="mb-0 ml-3 align-self-center">{{ $sort }}</p>
+                    <p class="mb-0 ml-3 align-self-center">{{ $sort_order }}</p>
                     @endif
                     </div>
                     <form method="GET" action="{{ url('top') }}" class="d-flex">
