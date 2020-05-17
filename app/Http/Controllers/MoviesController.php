@@ -7,7 +7,7 @@ use GuzzleHttp\Client;
 use App\Models\Movie;
 use App\Models\Genre;
 use App\Models\Actor;
-use App\Libraries\Tmdb;
+use App\Libraries\tmdbService;
 
 class MoviesController extends Controller
 {
@@ -15,8 +15,8 @@ class MoviesController extends Controller
     {
         //まだ登録がない場合はTMDBapiを叩く
         if (Movie::where('tmdb_id', $tmdb_movie_id)->doesntExist()) {
-            $movie_array = Tmdb::getMovieArray($tmdb_movie_id);
-            $credits_array = Tmdb::getCreditArray($tmdb_movie_id);
+            $movie_array = tmdbService::getMovieArray($tmdb_movie_id);
+            $credits_array = tmdbService::getCreditArray($tmdb_movie_id);
             $movie->storeMovie($movie_array);
 
             //ジャンルの登録

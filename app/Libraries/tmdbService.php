@@ -4,7 +4,7 @@ namespace app\Libraries;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 
-class Tmdb{
+class tmdbService{
 
     public static function getSearchArray($request)
     {
