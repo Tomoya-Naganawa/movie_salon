@@ -49,7 +49,7 @@ class MoviesController extends Controller
         
             return redirect(url('movies/'.$movie->id));
             
-        //すでに登録がある場合は映画詳細へ遷移
+        //すでに登録がある場合は映画詳細画面へ遷移
         }else{
             $movie_id = Movie::where('tmdb_id', $tmdb_movie_id)->value('id');
             return redirect(url('movies/'.$movie_id));
@@ -58,6 +58,7 @@ class MoviesController extends Controller
 
     public function show(Movie $movie)
     {
+        //閲覧数のインクリメント
         $ranking = new RankingModule;
         $ranking->increment_view_ranking($movie->id);
         
