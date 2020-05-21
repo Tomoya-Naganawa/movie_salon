@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Review;
 use App\Models\Movie;
 use App\Models\Favorite;
+use App\Libraries\RankingModule;
 
 class TopController extends Controller
 {

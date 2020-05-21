@@ -8,6 +8,7 @@ use App\Models\Movie;
 use App\Models\Genre;
 use App\Models\Actor;
 use App\Libraries\TmdbService;
+use App\Libraries\RankingModule;
 
 class MoviesController extends Controller
 {

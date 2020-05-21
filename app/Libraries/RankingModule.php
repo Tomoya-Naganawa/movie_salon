@@ -1,11 +1,10 @@
 <?php
-
-namespace App\Http\Controllers;
+namespace app\Libraries;
 
 use Illuminate\Http\Request;
 use Redis;
 
-class RankingModule extends Controller
+class RankingModule
 {
     //閲覧数をインクリメント
     public function increment_view_ranking($id){
