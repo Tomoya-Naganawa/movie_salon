@@ -1,6 +1,6 @@
 <?php
 if (! function_exists('star_rating')) {
-    function star_rating(Int $rating, String $star_size) {
+    function star_rating($rating, $star_size) {
         for($i = 1; $i <= $rating; $i++){ 
             echo '<i class="fas fa-star ' .$star_size. '" style="color:#ffcc00;"></i>' ; 
             }
