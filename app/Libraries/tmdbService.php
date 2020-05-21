@@ -6,7 +6,7 @@ use GuzzleHttp\Client;
 
 class TmdbService{
 
-    public static function getSearchArray($request)
+    public function getSearchArray($request)
     {
         $api_key = "7a093c40ba32d5a12b8109f2984241d3";
 
@@ -30,7 +30,7 @@ class TmdbService{
         return $search_array;
     }
 
-    public static function getMovieArray($tmdb_movie_id)
+    public function getMovieArray($tmdb_movie_id)
     {
         $api_key = "7a093c40ba32d5a12b8109f2984241d3";
 
@@ -45,7 +45,7 @@ class TmdbService{
         return $movie_array;
     }
     
-    public static function getCreditArray($tmdb_movie_id)
+    public function getCreditArray($tmdb_movie_id)
     {
         $api_key = "7a093c40ba32d5a12b8109f2984241d3";
 

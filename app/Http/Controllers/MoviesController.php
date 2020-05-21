@@ -15,8 +15,9 @@ class MoviesController extends Controller
     {
         //まだ登録がない場合はTMDBapiを叩く
         if (Movie::where('tmdb_id', $tmdb_movie_id)->doesntExist()) {
-            $movie_array = TmdbService::getMovieArray($tmdb_movie_id);
-            $credits_array = TmdbService::getCreditArray($tmdb_movie_id);
+            $movieService = new TmdbService;
+            $movie_array = $movieService->getMovieArray($tmdb_movie_id);
+            $credits_array = $movieService->getCreditArray($tmdb_movie_id);
             $movie->storeMovie($movie_array);
 
             //ジャンルの登録
@@ -48,7 +49,6 @@ class MoviesController extends Controller
             $movie->actors()->attach($actors_id);
         
             return redirect(url('movies/'.$movie->id));
-            
         //すでに登録がある場合は映画詳細画面へ遷移
         }else{
             $movie_id = Movie::where('tmdb_id', $tmdb_movie_id)->value('id');

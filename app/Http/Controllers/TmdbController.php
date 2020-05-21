@@ -17,7 +17,8 @@ class TmdbController extends Controller
         ]);
         $validator->validate();
 
-        $search_array = TmdbService::getSearchArray($request);
+        $TmdbService = new TmdbService;
+        $search_array = $TmdbService->getSearchArray($request);
 
         return view('tmdbs.search', [
             'search_array' => $search_array,
@@ -29,9 +30,10 @@ class TmdbController extends Controller
     
     public function show($tmdb_movie_id)
     {
-        $movie_array = TmdbService::getMovieArray($tmdb_movie_id);
-        
-        $credits_array = TmdbService::getCreditArray($tmdb_movie_id);
+        $TmdbService = new TmdbService;
+        $movie_array = $TmdbService->getMovieArray($tmdb_movie_id);
+        $TmdbService = new TmdbService;
+        $credits_array = $TmdbService->getCreditArray($tmdb_movie_id);
 
         return view('tmdbs.show', [
             'movie_array' => $movie_array,
