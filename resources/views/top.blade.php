@@ -69,7 +69,7 @@
                 <div class="d-flex justify-content-between">
                     <div class="d-flex">
                     <h3 class="font-weight-bold">Review</h3>
-                    @if(isset($sort))
+                    @if(isset($sort_order))
                     <p class="mb-0 ml-3 align-self-center">{{ $sort_order }}</p>
                     @endif
                     </div>

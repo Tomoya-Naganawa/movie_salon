@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Libraries\TmdbService;
 
-class TmdbController extends Controller
+class SearchController extends Controller
 {
 
     public function search(Request $request)
@@ -32,7 +32,6 @@ class TmdbController extends Controller
     {
         $TmdbService = new TmdbService;
         $movie_array = $TmdbService->getMovieArray($tmdb_movie_id);
-        $TmdbService = new TmdbService;
         $credits_array = $TmdbService->getCreditArray($tmdb_movie_id);
 
         return view('tmdbs.show', [
