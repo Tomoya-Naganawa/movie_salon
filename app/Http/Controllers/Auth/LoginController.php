@@ -28,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/top';
 
     /**
      * Create a new controller instance.
@@ -52,7 +52,7 @@ class LoginController extends Controller
 
         if($user){
             Auth::login($user);
-            return redirect('/home');
+            return redirect('/top');
         }else{
             $newuser = new User;
             $newuser->name = $userSocial->getName();
@@ -60,7 +60,7 @@ class LoginController extends Controller
             $newuser->save();
 
             Auth::login($newuser);
-            return redirect('/home');
+            return redirect('/top');
         }
     }
 }
