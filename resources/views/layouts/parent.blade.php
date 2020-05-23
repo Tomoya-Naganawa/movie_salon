@@ -46,7 +46,7 @@
                     </li>
                     @else
                     <li class="nav-item">
-                        <a href="{{ route('login') }}" class="nav-link active text-light">ログイン</a>
+                        <a href="{{ url('/') }}" class="nav-link active text-light">ログイン</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('register') }}" class="nav-link active text-light">アカウントを作成</a>
