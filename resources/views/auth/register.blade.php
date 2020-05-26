@@ -2,44 +2,31 @@
 
 @section('content')
 <div class="col-md-12 d-flex justify-content-center">
-    <div class="col-md-10">
+    <div class="col-md-8">
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
             <h4 class="border-bottom">新規アカウント作成</h4>
             <div class="form-group row">
-                <div class="col-md-8 p-3">
+                <div class="col-md-12 p-3">
                     <h6>ユーザ名</h6>
-                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                    @error('name')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+                    <input id="name" type="text" class="form-control @invalid('name')" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                    @component('components.invalid_feedback', ['name' => 'name'])
+                    @endcomponent
                 </div>
-                <div class="col-md-8 p-3">
+                <div class="col-md-12 p-3">
                     <h6>メールアドレス</h6>
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                    @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+                    <input id="email" type="email" class="form-control @invalid('email')" name="email" value="{{ old('email') }}" required autocomplete="email">
+                    @component('components.invalid_feedback', ['name' => 'email'])
+                    @endcomponent
                 </div>
             </div>
-
             <div class="form-group row">
                 <div class="col-md-6 p-3">
                     <h6>パスワード</h6>
-                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                    @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+                    <input id="password" type="password" class="form-control @invalid('email')" name="password" required autocomplete="new-password">
+                    @component('components.invalid_feedback', ['name' => 'password'])
+                    @endcomponent
                 </div>
                 <div class="col-md-6 p-3">
                     <h6>パスワード（確認）</h6>
@@ -52,5 +39,4 @@
         </form>
     </div>
 </div>
-
 @endsection

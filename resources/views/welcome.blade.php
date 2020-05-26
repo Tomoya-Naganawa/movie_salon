@@ -86,13 +86,18 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group mb-0">
                                     <div class="col-md-12 d-flex">   
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                                         </div>
-                                        <p class="mb-0 text-dark">パスワードを記憶</p>
+                                        <p class="mb-0 text-dark"><small>パスワードを記憶</small></p>
                                     </div>
+                                    @if (Route::has('password.request'))
+                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                        <small>パスワードを忘れた</small>
+                                    </a>
+                                    @endif
                                 </div>
                                 <div class="form-group mb-0">
                                     <button type="submit" class="btn btn-primary btn-block">ログイン</button>

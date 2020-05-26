@@ -6,10 +6,11 @@ use GuzzleHttp\Client;
 
 class TmdbService{
 
+    private $api_key = "7a093c40ba32d5a12b8109f2984241d3";
+    private $method = "GET";
+
     public function getSearchArray($request)
     {
-        $api_key = "7a093c40ba32d5a12b8109f2984241d3";
-
         $category = $request['category'];
         $query = $request['query'];
 
@@ -19,11 +20,10 @@ class TmdbService{
             $page = 1;
         }
 
-        $url = "https://api.themoviedb.org/3/search/" .$category. "?api_key=" .$api_key. "&language=ja-JA&query=" .$query. "&page=" .$page. "&include_adult=false";
-        $method = "GET";
+        $url = "https://api.themoviedb.org/3/search/" .$category. "?api_key=" .$this->api_key. "&language=ja-JA&query=" .$query. "&page=" .$page. "&include_adult=false";
 
         $client = new Client();
-        $response = $client->request($method, $url);
+        $response = $client->request($this->method, $url);
         $search_array = $response->getBody();
         $search_array = json_decode($search_array, true);
 
@@ -32,13 +32,10 @@ class TmdbService{
 
     public function getMovieArray($tmdb_movie_id)
     {
-        $api_key = "7a093c40ba32d5a12b8109f2984241d3";
-
-        $movie_url = "https://api.themoviedb.org/3/movie/" .$tmdb_movie_id. "?api_key=" .$api_key. "&language=ja-JA";
-        $method = "GET";
+        $movie_url = "https://api.themoviedb.org/3/movie/" .$tmdb_movie_id. "?api_key=" .$this->api_key. "&language=ja-JA";
 
         $client = new Client();
-        $response = $client->request($method, $movie_url);
+        $response = $client->request($this->method, $movie_url);
         $movie_array = $response->getBody();
         $movie_array = json_decode($movie_array, true);
 
@@ -47,13 +44,10 @@ class TmdbService{
     
     public function getCreditArray($tmdb_movie_id)
     {
-        $api_key = "7a093c40ba32d5a12b8109f2984241d3";
-
-        $credits_url = "https://api.themoviedb.org/3/movie/" .$tmdb_movie_id. "/credits?api_key=" .$api_key;
-        $method = "GET";
+        $credits_url = "https://api.themoviedb.org/3/movie/" .$tmdb_movie_id. "/credits?api_key=" .$this->api_key;
 
         $client = new Client();
-        $response = $client->request($method, $credits_url);
+        $response = $client->request($this->method, $credits_url);
         $credits_array = $response->getBody();
         $credits_array = json_decode($credits_array, true);
 
