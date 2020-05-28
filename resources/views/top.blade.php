@@ -69,9 +69,7 @@
                 <div class="d-flex justify-content-between">
                     <div class="d-flex">
                     <h3 class="font-weight-bold">Review</h3>
-                    @if(isset($sort_order))
-                    <p class="mb-0 ml-3 align-self-center">{{ $sort_order }}</p>
-                    @endif
+                    <p class="mb-0 ml-3 align-self-center">{{ $str }}</p>
                     </div>
                     <form method="GET" action="{{ url('top') }}" class="d-flex">
                         <select class="form-control input-group form-control-sm mb-2" name="sort_order" onChange="this.form.submit()">

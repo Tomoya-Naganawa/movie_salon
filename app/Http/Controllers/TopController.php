@@ -30,23 +30,23 @@ class TopController extends Controller
         if ($request->has('sort_order')) {
             if ($request->sort_order == 'asc') {
                 $reviews = $query->orderBy('created_at', 'asc')->paginate(10);
-                $sort_order = "投稿の古い順";
+                $str = "投稿の古い順";
             } elseif ($request->sort_order == 'desc') {
                 $reviews = $query->orderBy('created_at', 'desc')->paginate(10);
-                $sort_order = "投稿の新しい順";
+                $str = "投稿の新しい順";
             } elseif ($request->sort_order == 'favorite_count') {
                 $reviews = $query->orderBy('favorite_count', 'desc')->paginate(10);
-                $sort_order = "評価の高い順";
+                $str = "評価の高い順";
             }
-        }else {
+        } else {
             $reviews = $query->orderBy('created_at', 'desc')->paginate(10);
-            $sort_order = "最新のレビュー";
+            $str = "最新のレビュー";
         }    
 
         return view('top', [
             'reviews' => $reviews,
             'top_six_movies' => $top_six_movies,
-            'sort' => $sort_order
+            'str' => $str
             ]);
     }
 }
