@@ -53,7 +53,7 @@ class ReviewsController extends Controller
             $movie->ratingAvgUpdate($data['movie_id']);
         });
         
-        return redirect( url('/movies/'.$data['movie_id']) );
+        return redirect( url('/reviews/'.$review->id) );
     }
 
     /**
@@ -64,12 +64,14 @@ class ReviewsController extends Controller
      */
     public function edit(Review $review)
     {
-        $user = auth()->user();
-        $review = $review->getEditReview($review->id);
-
-        return view('reviews.edit', [
-            'review' => $review
-        ]);
+        if (auth()->user()->id == $review->user_id) {
+            $review = $review->getEditReview($review->id);
+            return view('reviews.edit', [
+                'review' => $review
+            ]);
+        }else{
+            abort(403);
+        }
     }
 
     /**
@@ -89,12 +91,16 @@ class ReviewsController extends Controller
         ]);
         $validator->validate();
 
-        DB::transaction(function() use($data, $review, $movie){
-            $review->updateReview($data);
-            $movie->ratingAvgUpdate($review->movie_id);
-        });
+        if (auth()->user()->id == $review->user_id) {
+            DB::transaction(function () use ($data, $review, $movie) {
+                $review->updateReview($data);
+                $movie->ratingAvgUpdate($review->movie_id);
+            });
 
-        return redirect( url('/movies/'.$review->movie_id) );
+            return redirect(url('/reviews/'.$review->id));
+        }else{
+            abort(403);
+        }
     }
 
     /**

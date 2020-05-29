@@ -45,7 +45,11 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        return view('users.edit', ['user' => $user]);
+        if(auth()->user()->id == $user->id){
+            return view('users.edit', ['user' => $user]);
+        }else{
+            abort(403);
+        }
     }
 
     /**
@@ -64,8 +68,12 @@ class UsersController extends Controller
             'email'         => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)]
         ]);
         $validator->validate();
-        $user->updateProfile($data);
 
-        return redirect('/home');
+        if(auth()->user()->id == $user->id){
+            $user->updateProfile($data);
+            return redirect('/top');
+        }else{
+            abort(403);
+        }
     }
 }

@@ -37,8 +37,12 @@ class CommentsController extends Controller
      */
     public function destroy(Request $request, Comment $comment)
     {
-        $comment->destroyComment($comment->id);
+        if (auth()->user()->id == $review->user_id) {
+            $comment->destroyComment($comment->id);
 
-        return back();
+            return back();
+        }else{
+            abort(403);
+        }
     }
 }
