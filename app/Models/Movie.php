@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Movie extends Model
@@ -55,15 +56,25 @@ class Movie extends Model
         return $this->where('id', $movie_id)->value('title');
     }
 
-    //上位6までのidを取得
+    public function getMovieRanking(Array $results)
+    {
+        $movie_ids = array_keys($results);
+        $ids_order = implode(',', $movie_ids);
+        $movie_ranking = $this->with('reviews')
+                              ->whereIn('id', $movie_ids)
+                              ->orderByRaw(DB::raw("FIELD(id, $ids_order)"))
+                              ->paginate(12);
+        return $movie_ranking;
+    }
+
+    //上位6までの映画を取得
     public function getRankInMovie(Array $results)
     {
         $top_six_movies_id = array_slice(array_keys($results), 0, 6);
-        $top_six_movies = Array();
-        foreach($top_six_movies_id as $top_six_movie_id){
-            $top_six_movie = $this->where('id', $top_six_movie_id)->first();
-            array_push($top_six_movies, $top_six_movie);
-        }
+        $ids_order = implode(',', $top_six_movies_id);
+        $top_six_movies = $this->whereIn('id', $top_six_movies_id)
+                               ->orderByRaw(DB::raw("FIELD(id, $ids_order)"))
+                               ->get();
         return $top_six_movies;
     }
 

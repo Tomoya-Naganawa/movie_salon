@@ -7,7 +7,7 @@ use Redis;
 class RankingModule
 {
     //閲覧数をインクリメント
-    public function increment_view_ranking($id){
+    public function incrementViewRanking($id){
         $key = "ranking-"."id:".$id;
 
         $value = Redis::get($key);
@@ -20,7 +20,7 @@ class RankingModule
     }
 
     //ランキング結果を配列で取得
-    public function get_ranking_all(){
+    public function getRankingAll(){
         $keys = Redis::keys('ranking-*');
         $results = Array();
 

@@ -7,9 +7,9 @@
             <div class="col-md-12 p-0 d-flex align-items-center text-light">
                 <div class="col-md-12 py-4">
                     <h1 class="font-weight-bold">welcome!</h1>
-                    <p>映画に出会える場。映画を探そう。レビューを書こう</p>
+                    <p>映画に出会える場。映画を探そう。レビューを書こう。</p>
                     <div class="d-flex justify-content-center">
-                        <div class="col-md-11">
+                        <div class="col-md-12">
                             <form action="{{ url('/search') }}" method="GET" class="mt-3">
                                 <div class="form-row justify-content-end">
                                     <div class="flex-grow-1">
@@ -35,9 +35,10 @@
     <div class="container px-0">
         <div class="row">
             <div class="col-md-12 py-3">
-                <div class="d-flex">
+                <div class="d-flex align-items-center">
                     <h3 class="font-weight-bold">Movie</h3>
-                    <p class="mb-0 ml-3 align-self-center">デイリーアクセスランキング</p>
+                    <p class="mb-0 ml-3">デイリーアクセスランキング</p>
+                    <a class="mb-0 ml-auto" href="{{ route('ranking') }}">ランキングの続きを見る ></a>
                 </div>
                 <div class="col-md-12 d-flex p-0">
                 @for($i = 0; $i <= 5; $i++)
@@ -47,19 +48,19 @@
                 <div class="col-md-2 px-1">
                     <div class="card-body p-0">
                         <div class="m-1">
-                            <h4 class="m-0 font-weight-bold"><span class="badge badge-pill badge-dark">{{$i + 1}}</span></h4>
+                            <h4 class="m-0 font-weight-bold" style="position:absolute;"><span class="badge badge-pill badge-dark border border-success">{{$i + 1}}</span></h4>
                         </div>
                         <img class="rounded img-fluid shadow" src="{{'https://image.tmdb.org/t/p/w1280/'.$top_six_movies[$i]->poster_path}}" width="140" height="210">
                         <div class="d-flex py-1 align-items-baseline">
-                        {{star_rating($top_six_movies[$i]->rating_avg, 'fa')}}
-                        <p class="mb-0">{{ $top_six_movies[$i]->rating_avg}}</p>
+                            {{star_rating($top_six_movies[$i]->rating_avg, 'fa')}}
+                            <p class="mb-0">{{ $top_six_movies[$i]->rating_avg}}</p>
                         </div>
                         <a class="text-dark" href="{{ url('movies/'. $top_six_movies[$i]->id) }}"><p class="font-weight-bold mb-0">{{ $top_six_movies[$i]->title }}</p></a>
                         <p class="text-secondary mb-0">{{ $top_six_movies[$i]->release_date }}</p>
                     </div>
                 </div>
                 @endfor
-                </div>
+                </div>  
             </div>
         </div>
     </div>
@@ -68,8 +69,8 @@
             <div class="col-md-12 py-3">
                 <div class="d-flex justify-content-between">
                     <div class="d-flex">
-                    <h3 class="font-weight-bold">Review</h3>
-                    <p class="mb-0 ml-3 align-self-center">{{ $str }}</p>
+                        <h3 class="font-weight-bold">Review</h3>
+                        <p class="mb-0 ml-3 align-self-center">{{ $str }}</p>
                     </div>
                     <form method="GET" action="{{ url('top') }}" class="d-flex">
                         <select class="form-control input-group form-control-sm mb-2" name="sort_order" onChange="this.form.submit()">

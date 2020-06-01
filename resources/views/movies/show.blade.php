@@ -26,10 +26,11 @@
                 <h6 class="text-white-50">上映時間：</h6>
                 <h6>{{ $movie->runtime }}分</h6>
             </div>
-            <div class="d-flex align-items-end mt-2 mb-4">                           
+            <div class="d-flex align-items-baseline mt-2 mb-4">                           
                 @if(isset($movie->rating_avg))
                     {{star_rating($movie->rating_avg, 'fa-2x')}}
-                    <h5 class="mb-0 ml-3">{{ $movie->rating_avg }}<small class="text-white-50">　ユーザーレビュー({{ count($movie->reviews) }})</small></h5>
+                    <h4 class="mb-0 ml-3">{{ $movie->rating_avg }}</h4>
+                    <a href="#user_reviews" class="mb-0 ml-3 text-white-50"><i class="fas fa-newspaper">  ユーザレビュー({{ count($movie->reviews) }})</i></a>
                 @else
                     <h6>まだレビューはありません</h6>
                 @endif             
@@ -63,13 +64,13 @@
     <div class="row justify-content-center py-4">
         <div class="col-md-11">
             <a class="btn btn-primary mb-4" href="{{ url('/reviews/'.$movie->id.'/create') }}">この映画のレビューを書く</a>
-            <h4 class="border-bottom mb-3">ユーザーレビュー({{ count($movie->reviews) }})</h4>
+            <h4 class="border-bottom mb-3" id="user_reviews">ユーザレビュー({{ count($movie->reviews) }})</h4>
             @foreach($movie->reviews as $review)
             <div class="card mb-2 shadow">
                 <div class="card-header bg-white d-flex p-2">
                     <img src="{{ $review->user->profile_image }}" class="rounded-circle" width="30" height="30">
                     <div class="ml-2 d-flex flex-column">
-                        <a href="#" class="text-secondary">{{ $review->user->name }}</a>
+                        <a href="{{ url('/users/'.$review->user->id) }}" class="text-secondary">{{ $review->user->name }}</a>
                     </div>
                     <div class="d-flex justify-content-end flex-grow-1">
                         <p class="mb-0 text-secondary">{{ $review->created_at->format('Y-m-d H:i') }}に投稿</p>

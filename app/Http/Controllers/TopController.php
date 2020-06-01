@@ -14,7 +14,7 @@ class TopController extends Controller
     {
         //ランキング結果を配列で取得
         $ranking = new RankingModule;
-        $results = $ranking->get_ranking_all();
+        $results = $ranking->getRankingAll();
         //上位6位までを取得
         $top_six_movies = $movie->getRankInMovie($results);
 
@@ -36,7 +36,7 @@ class TopController extends Controller
                 $str = "投稿の新しい順";
             } elseif ($request->sort_order == 'favorite_count') {
                 $reviews = $query->orderBy('favorite_count', 'desc')->paginate(10);
-                $str = "評価の高い順";
+                $str = "いいねの多い順";
             }
         } else {
             $reviews = $query->orderBy('created_at', 'desc')->paginate(10);

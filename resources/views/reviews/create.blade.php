@@ -22,13 +22,13 @@
 </div>
 <div class="form-group pb-2">
     <h6>レビュータイトル</h6>
-    <input class="form-control @invalid('heading')" name="heading" autocomplete="heading" placeholder="あなたがこの映画で最も伝えたいポイントは？">
+    <input class="form-control @invalid('heading')" name="heading" autocomplete="heading" placeholder="あなたがこの映画で最も伝えたいポイントは？" required>
     @component('components.invalid_feedback', ['name' => 'heading'])
     @endcomponent       
 </div>
 <div class="form-group">
     <h6>本文</h6>
-    <textarea class="form-control @invalid('text')" name="text" autocomplete="text" rows="20" placeholder="あなたがこの映画を見て感じたことを自由に書きましょう"></textarea>
+    <textarea class="form-control @invalid('text')" name="text" autocomplete="text" rows="23" placeholder="あなたがこの映画を見て感じたことを自由に書きましょう" required></textarea>
     @component('components.invalid_feedback', ['name' => 'text'])
     @endcomponent       
 </div>

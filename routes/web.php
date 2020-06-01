@@ -11,16 +11,19 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => 'guest'], function() {
+    Route::get('/', function () {
+        return view('welcome');
+    });
+
+    Route::get('/login/{social}', 'Auth\LoginController@socialLogin')->where('social', 'facebook|google');
+    Route::get('/login/{social}/callback', 'Auth\LoginController@handleProviderCallback')->where('social', 'facebook|google');
 });
 
 Route::get('/top', 'TopController@index')->name('top');
-
-Route::get('/login/{social}', 'Auth\LoginController@socialLogin')->where('social', 'facebook|google');
-Route::get('/login/{social}/callback', 'Auth\LoginController@handleProviderCallback')->where('social', 'facebook|google');
 Route::get('/search', 'SearchController@search');
 Route::get('/search/{tmdb_movie_id}', 'SearchController@show');
+Route::get('/movies/ranking', 'MoviesController@ranking')->name('ranking');
 
 Auth::routes();
 

@@ -14,7 +14,7 @@ class SearchController extends Controller
     {  
         $validator = Validator::make($request->all(),[
             'category' => ['required', 'in:"movie","person"'],
-            'query'     => 'required'
+            'query'    => 'required'
         ]);
         $validator->validate();
 

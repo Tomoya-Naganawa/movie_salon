@@ -75,7 +75,7 @@
             <div class="card-header bg-white d-flex p-2">
                 <img src="{{ $comment->user->profile_image }}" class="rounded-circle" width="30" height="30">
                 <div class="ml-2 d-flex flex-column">
-                    <a href="#" class="text-secondary">{{ $comment->user->name }}</a>
+                    <a href="{{ url('/users/'.$comment->user->id) }}" class="text-secondary">{{ $comment->user->name }}</a>
                 </div>
                 <div class="d-flex justify-content-end flex-grow-1">
                     <p class="mb-0 text-secondary">{{ $comment->created_at->format('Y-m-d H:i') }}に投稿</p>
@@ -96,9 +96,9 @@
                         </div>
                         <div class="modal fade" id="commentDelModal" tabindex="-1" role="dialog" aria-labelledby="commentDelModalLabel" aria-hidden="true">
                         @component('components.del_modal')
-                            このレビューを削除しますか
+                            このコメントを削除しますか
                         @endcomponent
-                        </div>    
+                        </div>
                     </form>  
                 </div>
                 @endif
@@ -111,7 +111,7 @@
                 <form method="POST" action="{{ url('/comments') }}" class="mt-3">
                     @csrf
 
-                    <textarea class="form-control @invalid('text')" name="text" autocomplete="text" rows="5" placeholder="このレビューにコメントします"></textarea>
+                    <textarea class="form-control @invalid('text')" name="text" autocomplete="text" rows="5" placeholder="このレビューにコメントします" required></textarea>
                     @component('components.invalid_feedback', ['name' => 'text'])
                     @endcomponent
                     <div class="d-flex justify-content-end mt-1">

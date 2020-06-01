@@ -54,12 +54,24 @@ class MoviesController extends Controller
     {
         //閲覧数のインクリメント
         $ranking = new RankingModule;
-        $ranking->increment_view_ranking($movie->id);
+        $ranking->incrementViewRanking($movie->id);
         
         $movie->getMovie($movie->id);
 
         return view('movies.show', [
             'movie' => $movie
+        ]);
+    }
+
+    public function ranking(Movie $movie)
+    {
+        $ranking = new RankingModule;
+        $results = $ranking->getRankingAll();
+
+        $movie_ranking = $movie->getMovieRanking($results);
+
+        return view('Movies.ranking', [
+            'movie_ranking' => $movie_ranking
         ]);
     }
 }

@@ -2,11 +2,6 @@
 
 @section('content')
 
-@if(empty($search_array['results']))
-<div class="col-md-12 justify-content-center">
-    "{{ $query }}"の検索結果は見つかりませんでした。
-</div>
-@endif
 @if($category == 'person')
 <div class="col-md-12 justify-content-center">
     <h5 class="border-bottom mb-4">人物"<strong>{{ $query }}</strong>"の検索結果</h5>
@@ -63,6 +58,16 @@
         </div>          
     </div>
     @endforeach
+@endif
+
+@if(empty($search_array['results']))
+<div class="col-md-12 justify-content-center">
+    "{{ $query }}"に一致する情報は見つかりませんでした。<br><br>
+    検索のヒント<br>
+    ・日本語で検索する場合「・」が必要な場合があります。例（×「ハリーポッター」〇「ハリー・ポッター」、×「ジムキャリー」〇「ジム・キャリー」）<br>
+    ・日本語で見つからない場合、英語で検索してみましょう。<br>
+    ・部分一致検索も可能です。
+</div>
 @endif
 @include('components.tmdb_paging')
     
