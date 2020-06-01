@@ -67,7 +67,7 @@ class StoreTest extends TestCase
     }
 
     /**
-     * 正常系：既に同じ映画が保存されている場合、映画詳細画面へのリダイレクト
+     * 正常系：既に同じ映画が保存されている場合、映画詳細画面へリダイレクト
      */
     public function testRedirectExistingMovie()
     {

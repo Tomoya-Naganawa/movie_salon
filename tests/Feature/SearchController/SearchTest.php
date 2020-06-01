@@ -56,7 +56,7 @@ class SearchTest extends TestCase
     public function ValidData()
     {
         return [
-            'requestData' => [
+            'Request has all movie data' => [
                 'movieData' => [
                     'page' => 1,
                     'total_pages' => 1,
@@ -74,7 +74,78 @@ class SearchTest extends TestCase
                     'query' => 'インターステラー',
                     'category' => 'movie'    
                 ]
-            ]  
+            ], 
+
+            'Request has all person data' => [
+                'movieData' => [
+                    'page' => 1,
+                    'total_pages' => 1,
+                    'results' => [
+                        [
+                            'id'        => 206,
+                            'name'      => 'ジム・キャリー',
+                            'known_for_department' => 'Acting',
+                            'known_for' => [
+                                [
+                                    'id' => 37165,
+                                    'title' => 'トゥルーマン・ショー',
+                                ],
+                                [
+                                    'id' => 38,
+                                    'title' => 'エターナル・サンシャイン',
+                                ],
+                                [
+                                    'id' => 310,
+                                    'title' => 'ブルース・オールマイティ',
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+                'queryParam' => [
+                    'query' => 'ジム・キャリー',
+                    'category' => 'person'    
+                ]
+            ],
+
+            'Request has "" ' => [
+                'movieData' => [
+                    'page' => 1,
+                    'total_pages' => 1,
+                    'results' => [
+                        [
+                            'id'           => 157336,
+                            'title'        => 'インターステラー',
+                            'release_date' => '',
+                            'poster_path'  => '',
+                            'overview'     => '',
+                        ]
+                    ]
+                ],
+                'queryParam' => [
+                    'query' => 'インターステラー',
+                    'category' => 'movie'    
+                ]
+            ],
+
+            'known_for is []' => [
+                'movieData' => [
+                    'page' => 1,
+                    'total_pages' => 1,
+                    'results' => [
+                        [
+                            'id'        => 206,
+                            'name'      => 'ジム・キャリー',
+                            'known_for_department' => 'Acting',
+                            'known_for' => []
+                        ]
+                    ]
+                ],
+                'queryParam' => [
+                    'query' => 'ジム・キャリー',
+                    'category' => 'person'    
+                ]
+            ],
         ];    
     }
 
