@@ -38,29 +38,37 @@
                 <div class="d-flex align-items-center">
                     <h3 class="font-weight-bold">Movie</h3>
                     <p class="mb-0 ml-3">デイリーアクセスランキング</p>
+                    @if(!empty($top_six_movies))
                     <a class="mb-0 ml-auto" href="{{ route('ranking') }}">ランキングの続きを見る ></a>
+                    @endif
                 </div>
+                @if(!empty($top_six_movies))
                 <div class="col-md-12 d-flex p-0">
-                @for($i = 0; $i <= 5; $i++)
-                @if(empty($top_six_movies[$i]))
-                    @break
-                @endif
-                <div class="col-md-2 px-1">
-                    <div class="card-body p-0">
-                        <div class="m-1">
-                            <h4 class="m-0 font-weight-bold" style="position:absolute;"><span class="badge badge-pill badge-dark border border-success">{{$i + 1}}</span></h4>
+                    @for($i = 0; $i <= 5; $i++)
+                    @if(empty($top_six_movies[$i]))
+                        @break
+                    @endif
+                    <div class="col-md-2 px-1">
+                        <div class="card-body p-0">
+                            <div class="m-1">
+                                <h4 class="m-0 font-weight-bold" style="position:absolute;"><span class="badge badge-pill badge-dark border border-success">{{$i + 1}}</span></h4>
+                            </div>
+                            <img class="rounded img-fluid shadow" src="{{'https://image.tmdb.org/t/p/w1280/'.$top_six_movies[$i]->poster_path}}" width="140" height="210">
+                            <div class="d-flex py-1 align-items-baseline">
+                                {{star_rating($top_six_movies[$i]->rating_avg, 'fa')}}
+                                <p class="mb-0">{{ $top_six_movies[$i]->rating_avg}}</p>
+                            </div>
+                            <a class="text-dark" href="{{ url('movies/'. $top_six_movies[$i]->id) }}"><p class="font-weight-bold mb-0">{{ $top_six_movies[$i]->title }}</p></a>
+                            <p class="text-secondary mb-0">{{ $top_six_movies[$i]->release_date }}</p>
                         </div>
-                        <img class="rounded img-fluid shadow" src="{{'https://image.tmdb.org/t/p/w1280/'.$top_six_movies[$i]->poster_path}}" width="140" height="210">
-                        <div class="d-flex py-1 align-items-baseline">
-                            {{star_rating($top_six_movies[$i]->rating_avg, 'fa')}}
-                            <p class="mb-0">{{ $top_six_movies[$i]->rating_avg}}</p>
-                        </div>
-                        <a class="text-dark" href="{{ url('movies/'. $top_six_movies[$i]->id) }}"><p class="font-weight-bold mb-0">{{ $top_six_movies[$i]->title }}</p></a>
-                        <p class="text-secondary mb-0">{{ $top_six_movies[$i]->release_date }}</p>
                     </div>
+                    @endfor
                 </div>
-                @endfor
-                </div>  
+                @else
+                <div class="col-md-12 d-flex justify-content-center p-0">
+                    <p>24時間以内のアクセスはありませんでした。</p>
+                </div>
+                @endif
             </div>
         </div>
     </div>

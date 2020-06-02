@@ -16,7 +16,11 @@ class TopController extends Controller
         $ranking = new RankingModule;
         $results = $ranking->getRankingAll();
         //上位6位までを取得
-        $top_six_movies = $movie->getRankInMovie($results);
+        if(!empty($results)){
+            $top_six_movies = $movie->getRankInMovie($results);
+        }else{
+            $top_six_movies = [];
+        }
 
         //レビューごとのいいね数を取得
         $favorite_count = $favorite->setCountSubQuery();
