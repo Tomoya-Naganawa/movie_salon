@@ -7,7 +7,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 use App\Models\User;
 use App\Models\Movie;
-use App\Libraries\TmdbService;
 
 class StoreTest extends TestCase
 {
@@ -30,8 +29,6 @@ class StoreTest extends TestCase
         $tmdbServiceMock->shouldReceive('getCreditArray')
                           ->once()
                           ->andReturn($credit);
-
-        $this->instance('App\Libraries\TmdbService', $tmdbServiceMock);
 
         $user = factory(User::class)->create();
         $url = url('/movies/157336/store');
@@ -77,7 +74,7 @@ class StoreTest extends TestCase
         $url = url('/movies/157336/store');
         $response = $this->actingAs($user)->get($url);
 
-        $response->assertRedirect(url('/movies/1'));
+        $response->assertRedirect(route('top'));
     }
 
     public function RequestData()

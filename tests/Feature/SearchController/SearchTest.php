@@ -7,7 +7,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 use App\Models\User;
 use App\Models\Movie;
-use App\Libraries\TmdbService;
 
 class SearchTest extends TestCase
 {
@@ -25,8 +24,6 @@ class SearchTest extends TestCase
         $tmdbServiceMock->shouldReceive('getSearchArray')
                         ->once()
                         ->andReturn($movie);
-
-        $this->instance('App\Libraries\TmdbService', $tmdbServiceMock);
 
         $user = factory(User::class)->create();
         $url = url('/search?query='.$param['query'].'&category='.$param['category']);

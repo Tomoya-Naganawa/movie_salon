@@ -53,4 +53,13 @@ class EditTest extends TestCase
             'profile_image' => 'profile imageには、2048 kB以下のファイルを指定してください。',
         ]);
     }
+
+    public function testEditProfile()
+    {
+        $user = factory(User::class)->create();
+        $url = url('/users/1');
+        $response = $this->actingAs($user)->get($url);
+
+        $response->assertStatus(200);
+    }
 }
