@@ -14,40 +14,44 @@ class MoviesController extends Controller
 {
     public function store(Request $request, Movie $movie, Genre $genre, Actor $actor, $tmdb_movie_id)
     {
-        $movieService = new TmdbService;
-        $movie_array = $movieService->getMovieArray($tmdb_movie_id);
-        $credits_array = $movieService->getCreditArray($tmdb_movie_id);
-        $movie->storeMovie($movie_array);
+        if (Movie::where('tmdb_id', $tmdb_movie_id)->doesntExist()) {
+            $movieService = new TmdbService;
+            $movie_array = $movieService->getMovieArray($tmdb_movie_id);
+            $credits_array = $movieService->getCreditArray($tmdb_movie_id);
+            $movie->storeMovie($movie_array);
 
-        //ジャンルの登録
-        foreach ($movie_array['genres'] as $movie_genre) {
-            $movie->genres()->create([
-            'movie_id' => $movie->id,
-            'genre_id' => $movie_genre['id']
-            ]);
-        }
-
-        //出演俳優4人の登録
-        $actors = [];
-        for ($i = 0; $i <= 3; $i++) {
-            if (empty($credits_array['cast'][$i])) {
-                break;
+            //ジャンルの登録
+            foreach ($movie_array['genres'] as $movie_genre) {
+                $movie->genres()->create([
+                'movie_id' => $movie->id,
+                'genre_id' => $movie_genre['id']
+                ]);
             }
 
-            $record = $actor->firstOrCreate([
+            //出演俳優4人の登録
+            $actors = [];
+            for ($i = 0; $i <= 3; $i++) {
+                if (empty($credits_array['cast'][$i])) {
+                    break;
+                }
+
+                $record = $actor->firstOrCreate([
                 'name' => $credits_array['cast'][$i]['name'],
                 'profile_path' => $credits_array['cast'][$i]['profile_path']
             ]);
-            array_push($actors, $record);
-        }
+                array_push($actors, $record);
+            }
 
-        $actors_id = [];
-        foreach ($actors as $actor) {
-            array_push($actors_id, $actor['id']);
-        }
-        $movie->actors()->attach($actors_id);
+            $actors_id = [];
+            foreach ($actors as $actor) {
+                array_push($actors_id, $actor['id']);
+            }
+            $movie->actors()->attach($actors_id);
         
-        return redirect(url('movies/'.$movie->id));
+            return redirect(url('movies/'.$movie->id));
+        }else{
+            return redirect(route('top'));
+        }
     }
 
     public function show(Movie $movie)
@@ -70,7 +74,7 @@ class MoviesController extends Controller
 
         $movie_ranking = $movie->getMovieRanking($results);
 
-        return view('Movies.ranking', [
+        return view('movies.ranking', [
             'movie_ranking' => $movie_ranking
         ]);
     }
