@@ -34,7 +34,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('reviews', 'ReviewsController', ['only' => ['show', 'store', 'edit', 'update', 'destroy']]);
     Route::resource('comments', 'CommentsController', ['only' => ['store', 'destroy']]);
     Route::resource('favorites', 'FavoritesController', ['only' => ['store', 'destroy']]);
-    Route::resource('users', 'usersController', ['only' => ['show', 'edit', 'update']]);
+    Route::resource('users', 'UsersController', ['only' => ['show', 'edit', 'update']]);
 });
 
 
